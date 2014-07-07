@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlServiceDao" >
+
+    <select id="serviceList" parameterType="java.util.Map" resultType="serviceDto">
+     /* QUERY ID : serviceList */
+        SELECT svc_id svcId,
+               svc_name svcName,
+               svc_desc svcDesc,
+               svc_prefix svcPrefix,
+               is_dummy isDummy,
+               is_menu isMenu,
+               upper_svc upperSvc,
+               svc_url svcUrl,
+               create_dt createDt,
+               creator creator,
+               auth_required authRequired,
+               use_yn useYn
+          FROM FRWK_CMM_SVCINFO
+         WHERE 1 = 1 
+         <if test="svcName != null">  AND svc_name like #{svcName} </if>
+         <if test="useYn != null">  AND use_yn like #{useYn} </if>
+         <if test="isMenu != null">  AND is_menu like #{isMenu} </if>
+         <if test="svcPrefix != null">  AND svc_prefix like #{svcPrefix} </if>
+         <if test="authRequired != null">  AND auth_required like #{authRequired} </if>
+    </select>
+    <select id="serviceListForNotAuthReq" resultType="serviceDto">
+     /* QUERY ID : serviceListForNotAuthReq */
+        SELECT svc_id svcId,
+               svc_name svcName,
+               svc_desc svcDesc,
+               svc_prefix svcPrefix,
+               is_dummy isDummy,
+               is_menu isMenu,
+               upper_svc upperSvc,
+               svc_url svcUrl,
+               create_dt createDt,
+               creator creator,
+               auth_required authRequired,
+               use_yn useYn
+          FROM FRWK_CMM_SVCINFO
+         WHERE auth_required = 'N'
+    </select>    
+    <select id="getServiceByRoleId" parameterType="java.util.Map" resultType="serviceDto">
+     /* QUERY ID : getServiceByRoleId : 지정된 롤에 해당하는 서비스 목록을 조회한다. */
+        SELECT svc_id svcId,
+               svc_name svcName,
+               svc_desc svcDesc,
+               svc_prefix svcPrefix,
+               is_dummy isDummy,
+               is_menu isMenu,
+               upper_svc upperSvc,
+               svc_url svcUrl,
+               create_dt createDt,
+               creator creator,
+               auth_required authRequired,
+               use_yn useYn
+          FROM FRWK_CMM_SVCINFO
+         WHERE use_yn = 'Y' AND SVC_ID IN (SELECT SVC_ID
+                            FROM FRWK_CMM_SVCROLEMAP
+                           WHERE ROLE_ID = ${roleId})
+    </select>
+    
+    <select id="serviceListWithMapped" parameterType="java.util.Map" resultType="serviceDto">
+     /* QUERY ID : serviceListWithMapped */
+        SELECT svc.svc_id svcid,
+               svc.svc_name svcname,
+               svc.svc_desc svcdesc,
+               svc.svc_prefix svcprefix,
+               svc.is_dummy isDummy,
+               svc.is_menu isMenu,
+               svc.upper_svc upperSvc,               
+               svc.svc_url svcurl,
+               svc.create_dt createdt,
+               svc.creator creator,
+               svc.auth_required authrequired,
+               svc.use_yn useyn
+          FROM frwk_cmm_svcrolemap map, frwk_cmm_svcinfo svc
+         WHERE map.role_id = #{roleId} AND map.svc_id = svc.svc_id;
+    </select>
+    <select id="serviceListWithNotMapped" parameterType="java.util.Map" resultType="serviceDto">
+     /* QUERY ID : serviceListWithNotMapped */
+        SELECT svc_id svcId,
+               svc_name svcName,
+               svc_desc svcDesc,
+               svc_prefix svcPrefix,
+               svc_url svcUrl,
+               is_dummy isDummy,
+               is_menu isMenu,
+               upper_svc upperSvc,               
+               create_dt createDt,
+               creator creator,
+               auth_required authRequired,
+               use_yn useYn
+          FROM FRWK_CMM_SVCINFO
+         WHERE 1 = 1 
+         <if test="svcName != null">  AND svc_name like #{svcName} </if>
+         <if test="useYn != null">  AND use_yn like #{useYn} </if>
+         <if test="isMenu != null">  AND is_menu like #{isMenu} </if>
+         <if test="svcPrefix != null">  AND svc_prefix like #{svcPrefix} </if>
+         <if test="authRequired != null">  AND auth_required like #{authRequired} </if>
+         AND svc_id NOT IN (SELECT svc_id FROM frwk_cmm_svcrolemap WHERE role_id = #{roleId})
+    </select>
+    
+    <select id="getNewServiceId" resultType="java.lang.Integer">
+     /* QUERY ID : getNewServiceId */
+        SELECT (coalesce(max(svc_id), 0) + 1) FROM FRWK_CMM_SVCINFO;
+    </select>
+    
+    <insert id="insertServiceInfo" parameterType="java.util.Map">
+     /* QUERY ID : insertServiceInfo */
+        INSERT INTO FRWK_CMM_SVCINFO(svc_id,
+                                  svc_name,
+                                  svc_desc,
+                                  svc_prefix,
+                                  svc_url,
+                                  upper_svc,
+                                  is_dummy,
+                                  is_menu,
+                                  creator,
+                                  auth_required,
+                                  use_yn)
+        VALUES (#{svcId},
+                #{svcName},
+                #{svcDesc},
+                #{svcPrefix},
+                #{svcUrl},
+                #{upperSvc},
+                upper(#{isDummy}),
+                upper(#{isMenu}),
+                #{creator},
+                #{authRequired},
+                upper(#{useYn}))
+    </insert>    
+    
+    <select id="getServiceInfo" parameterType="java.util.Map" resultType="serviceDto">
+     /* QUERY ID : getServiceInfo */
+        SELECT svc_id svcId,
+                svc_name svcName,
+                svc_desc svcDesc,
+                svc_prefix svcPrefix,
+                is_dummy isDummy,
+                is_menu isMenu,
+                upper_svc upperSvc,                
+                svc_url svcUrl,
+                use_yn useYn,
+                auth_required authRequired,
+                creator creator,
+                create_dt createDt
+          FROM FRWK_CMM_SVCINFO
+         WHERE svc_id =  #{svcId}
+    </select>
+    <select id="getServiceInfoByUrl" parameterType="java.util.Map" resultType="serviceDto">
+     /* QUERY ID : getServiceInfoByUrl */
+        SELECT svc_id svcId,
+                svc_name svcName,
+                svc_desc svcDesc,
+                svc_prefix svcPrefix,
+                is_dummy isDummy,
+                is_menu isMenu,
+                upper_svc upperSvc,                
+                svc_url svcUrl,
+                use_yn useYn,
+                auth_required authRequired,
+                creator creator,
+                create_dt createDt
+          FROM FRWK_CMM_SVCINFO
+         WHERE svc_url = '${svcUrl}' AND svc_prefix = '${svcPrefix}'
+    </select>
+    <select id="existServiceInfoByUrl" parameterType="java.util.Map" resultType="java.lang.String">
+     /* QUERY ID : existServiceInfoByUrl */
+        SELECT CASE WHEN a.cnt > 0 THEN 'true' ELSE 'false' END
+          FROM (SELECT count(*) cnt
+                  FROM frwk_cmm_svcinfo
+                 WHERE svc_url = '${svcUrl}' AND svc_prefix = '${svcPrefix}' ) a
+    </select>
+    
+    <update id="modifyServiceInfo" parameterType="java.util.Map">
+     /* QUERY ID : modifyServiceInfo */
+        UPDATE FRWK_CMM_SVCINFO SET
+                svc_name = #{svcName},
+                svc_desc = #{svcDesc},
+                svc_prefix = #{svcPrefix},
+                is_dummy = upper(#{isDummy}),
+                is_menu = upper(#{isMenu}),
+                upper_svc = #{upperSvc},                
+                svc_url = #{svcUrl},
+                creator  = #{creator},
+                auth_required  =  upper(#{authRequired}),
+                use_yn = upper(#{useYn})
+        WHERE svc_id = #{svcId}    
+    </update>
+        
+    <delete id="deleteServiceInfo" parameterType="java.lang.String">
+     /* QUERY ID : deleteServiceInfo */
+        DELETE FROM FRWK_CMM_SVCINFO WHERE svc_id = #{svcId}    
+    </delete>    
+                
+    <select id="getAllServices" parameterType="java.util.Map" resultType="serviceDto">
+     /* QUERY ID : getAllServices : 특정사용자가 가지고있는 모든 서비스를 조회 */        
+        SELECT SVC_ID svcId,
+               SVC_NAME svcName,
+               SVC_DESC svcDesc,
+               SVC_PREFIX svcPrefix,
+               IS_DUMMY isDummy,
+               IS_MENU isMenu,
+               UPPER_SVC upperSvc,
+               SVC_URL svcUrl,
+               USE_YN useYn,
+               AUTH_REQUIRED authRequired,
+               CREATOR creator,
+               CREATE_DT createDt
+          FROM FRWK_CMM_SVCINFO
+         WHERE USE_YN = 'Y' AND SVC_ID IN (SELECT DISTINCT SVC_ID
+                            FROM FRWK_CMM_SVCROLEMAP
+                           WHERE ROLE_ID IN (SELECT ROLE_ID
+                                               FROM FRWK_CMM_ROLEUSERMAP
+                                              WHERE USER_ID = '${userId}' ))
+    </select>                                       
+</mapper>

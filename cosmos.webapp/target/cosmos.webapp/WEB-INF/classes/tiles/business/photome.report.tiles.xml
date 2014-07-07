@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Photo Me reports -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <definition name="business/report/photome/01/main" extends="layout/framework/main">
+        <put-attribute name="title" value="PhotoMe Report > Group / Booth" />
+        <put-attribute name="main" value="/WEB-INF/views/business/report/01/main_Report01.jsp" />
+    </definition>
+    
+    <definition name="business/report/photome/02/main" extends="layout/framework/main">
+        <put-attribute name="title" value="PhotoMe Report > Group Incomes" />
+        <put-attribute name="main" value="/WEB-INF/views/business/report/02/main_Report02.jsp" />
+    </definition>
+
+     
+</tiles-definitions>

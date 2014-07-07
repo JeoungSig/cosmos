@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Technical Support Management -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Maintenance management main -->
+    <definition name="business/techsupport/maintenance/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Booth Maintenance > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/maintenance/historyList.jsp" />
+    </definition>
+
+    <!-- Maintenance history info -->
+    <definition name="business/techsupport/maintenance/historyInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth Maintenance > Maintenance History Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/maintenance/historyInfo.jsp" />
+    </definition>
+    <!-- Maintenance history regist form -->
+    <definition name="business/techsupport/maintenance/historyRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth Maintenance > Regist Maintenance History" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/maintenance/historyRegistForm.jsp" />
+    </definition>
+    <!-- Maintenance history modify form -->
+    <definition name="business/techsupport/maintenance/historyModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth Maintenance > Modify Maintenance History" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/maintenance/historyModifyForm.jsp" />
+    </definition>
+
+    <!-- Maintenance comment > management main -->
+    <definition name="business/techsupport/maintenance/comment/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Booth Maintenance > History Comment" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/maintenance/historyCommentMain.jsp" />
+    </definition>
+    <!-- Maintenance comment > history info -->
+    <definition name="business/techsupport/maintenance/comment/historyInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth Maintenance > Maintenance History Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/maintenance/comment/historyInfo.jsp" />
+    </definition>   
+    
+     <!-- Maintenance comment > Maintenance history info -->
+    <definition name="business/techsupport/maintenance/comment/historyInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth Maintenance > Maintenance History Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/maintenance/comment/historyInfo.jsp" />
+    </definition>   
+       
+
+
+    <definition name="business/techsupport/servicereq/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Service Request > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/servicereq/serviceRequestList.jsp" />
+    </definition>
+    <definition name="business/techsupport/servicereq/serviceRequestInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Service Request > Request Detail" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/servicereq/serviceRequestInfo.jsp" />
+    </definition>
+    <definition name="business/techsupport/servicereq/serviceRequestRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Service Request > Service Request" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/servicereq/serviceRequestRegistForm.jsp" />
+    </definition>
+    <definition name="business/techsupport/servicereq/serviceRequestModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Service Request > Service Request" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/servicereq/serviceRequestModifyForm.jsp" />
+    </definition>    
+    <definition name="business/techsupport/servicereq/serviceRequestThread" extends="layout/framework/popup">
+        <put-attribute name="title" value="Service Request > Service History" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/servicereq/serviceRequestThread.jsp" />
+    </definition>
+    <definition name="business/techsupport/servicereq/boothInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Photo Booth Management > Booth Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/servicereq/boothInfo.jsp" />
+    </definition>
+    <definition name="business/techsupport/servicereq/boothInfoUpdateForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Photo Booth Management > Booth Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/business/techsupport/servicereq/boothInfoUpdateForm.jsp" />
+    </definition>            
+     
+</tiles-definitions>

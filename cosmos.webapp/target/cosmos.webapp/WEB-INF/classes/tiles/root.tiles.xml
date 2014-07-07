@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+    "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Root tiles properties -->
+    <definition name="root">
+        <put-attribute name="title" value=":::Cosmos Framework:::" />
+        <put-attribute name="resource" value="/WEB-INF/views/common/resource.jsp" />
+        <put-attribute name="globalHeader" value="/WEB-INF/views/common/globalHeader.jsp" />
+        <put-attribute name="globalFooter" value="/WEB-INF/views/common/globalFooter.jsp" />
+    </definition>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Plain layout -->
+    <definition name="layout/common/plain" extends="root" template="/WEB-INF/views/_layout/plainPanel.jsp">
+    </definition>
+
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Default(for test) Definition -->
+    <definition name="error" extends="layout/framework/main">
+        <put-attribute name="main" value="/jsp/error/error500Page.jsp" />
+    </definition>
+</tiles-definitions>

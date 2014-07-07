@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlUserDao" >
+
+    <select id="userList" parameterType="java.util.Map" resultType="userDto">
+     /* QUERY ID : userList */
+     SELECT     b.code_name       userType,
+                a.user_id         userId,          
+                a.passwd          passwd,          
+                a.pwdfail_cnt     pwdfailCnt,      
+                a.first_name      firstName,       
+                a.middle_name     middleName,      
+                a.last_name       lastName,        
+                a.addr_street     addrStreet,      
+                a.addr_suburb     addrSuburb,      
+                a.addr_state      addrState,       
+                a.addr_zipcd      addrZipcd,       
+                a.mobile_phone    mobilePhone,     
+                a.telephone       telephone,       
+                a.email           email,           
+                a.sex             sex,             
+                a.birth_dt        birthDt,         
+                a.ext_col1        extCol1,         
+                a.ext_col2        extCol2,         
+                a.ext_col3        extCol3,         
+                a.ext_col4        extCol4,         
+                a.ext_col5        extCol5,         
+                a.use_yn          useYn,           
+                a.create_dt       createDt,        
+                a.modify_dt       modifyDt,        
+                a.login_dt        loginDt,         
+                a.picture_file    pictureFile,
+                (SELECT CONCAT(b.data_upload_rootpath, '/', upper(a.info_type), '/', a.saved_name) filepath
+                  FROM frwk_cmm_attach_file a, frwk_cmm_sysproperties b
+                 WHERE a.file_id = (SELECT picture_file FROM frwk_cmm_userinfo WHERE user_id = a.user_id)
+                   AND b.sys_id = '0') pictureFullPath
+          FROM FRWK_CMM_USERINFO a,  
+               (SELECT code_value, code_name FROM FRWK_CMM_CODE WHERE system_cd = 'SYSTEM' AND category_cd = 'USER_TYPE') b
+         WHERE a.user_type = b.code_value 
+         <if test="firstName != null">  AND a.first_name like #{firstName} </if>
+         <if test="useYn != null">  AND a.use_yn like #{useYn} </if>
+         <if test="userType != null">  AND a.user_type like #{userType} </if>
+         <if test="roleId != null">  AND a.user_id = (SELECT user_id FROM FRWK_CMM_ROLEUSERMAP WHERE user_id = a.user_id AND role_id = #{roleId}) </if>
+    </select>
+
+    <select id="getUserInfo" parameterType="java.util.Map" resultType="userDto">
+     /* QUERY ID : getUserInfo */
+        SELECT user_id         userId,          
+                passwd          passwd,          
+                pwdfail_cnt     pwdfailCnt,      
+                first_name      firstName,       
+                middle_name     middleName,      
+                last_name       lastName,        
+                addr_street     addrStreet,      
+                addr_suburb     addrSuburb,      
+                addr_state      addrState,       
+                addr_zipcd      addrZipcd,       
+                mobile_phone    mobilePhone,     
+                telephone       telephone,       
+                email           email,           
+                sex             sex,             
+                birth_dt        birthDt,         
+                ext_col1        extCol1,         
+                ext_col2        extCol2,         
+                ext_col3        extCol3,         
+                ext_col4        extCol4,         
+                ext_col5        extCol5,         
+                use_yn          useYn,           
+                create_dt       createDt,        
+                modify_dt       modifyDt,        
+                login_dt        loginDt,         
+                picture_file    pictureFile,     
+                user_type       userType
+          FROM FRWK_CMM_USERINFO
+         WHERE user_id =  #{userId}
+          <if test="useYn != null">  AND use_yn = #{useYn} </if>
+          <if test="passwd != null">  AND passwd = #{passwd} </if>
+    </select>
+
+    
+    <select id="getProfilePhoto" parameterType="java.util.Map" resultType="java.lang.String">
+     /* QUERY ID : getProfilePhoto */
+        SELECT CONCAT(b.data_upload_rootpath, '/', upper(a.info_type), '/', a.saved_name) filepath
+          FROM frwk_cmm_attach_file a, frwk_cmm_sysproperties b
+         WHERE   a.file_id = (SELECT picture_file
+                                FROM frwk_cmm_userinfo
+                               WHERE user_id = '${userId}')
+               AND  b.sys_id = '0'
+    </select>   
+    
+    <insert id="insertUserInfo" parameterType="java.util.Map">
+     /* QUERY ID : insertUserInfo */
+        INSERT INTO FRWK_CMM_USERINFO( user_id,
+                            passwd,
+                            first_name,
+                            addr_street,
+                            addr_suburb,
+                            addr_state,
+                            addr_zipcd,
+                            mobile_phone,
+                            telephone,
+                            email,
+                            sex,
+                            birth_dt,
+                            use_yn,
+                            modify_dt,
+                            picture_file,
+                            user_type)
+        VALUES (#{userId},
+            #{passwd},
+            #{firstName},
+            #{addrStreet},
+            #{addrSuburb},
+            #{addrState},
+            #{addrZipcd},
+            #{mobilePhone},
+            #{telephone},
+            #{email},
+            #{sex},
+            #{birthDt},
+            upper(#{useYn}),
+            CURRENT_TIMESTAMP,
+            #{pictureFile},
+            #{userType}  )
+    </insert>    
+    
+    <update id="modifyUserInfo" parameterType="java.util.Map">
+     /* QUERY ID : modifyUserInfo */
+        UPDATE FRWK_CMM_USERINFO SET
+                passwd        = #{passwd},
+                first_name    = #{firstName},
+                middle_name   = #{middleName},
+                last_name     = #{lastName},
+                addr_street   = #{addrStreet},
+                addr_suburb   = #{addrSuburb},
+                addr_state    = #{addrState},
+                addr_zipcd    = #{addrZipcd},
+                mobile_phone  = #{mobilePhone},
+                telephone     = #{telephone},
+                email         = #{email},
+                birth_dt      = #{birthDt},
+                sex           = #{sex},
+                birth_dt      = #{birthDt},
+                ext_col1      = #{extCol1},
+                ext_col2      = #{extCol2},
+                ext_col3      = #{extCol3},
+                ext_col4      = #{extCol4},
+                ext_col5      = #{extCol5},
+                use_yn        = upper(#{useYn}),
+                modify_dt     = CURRENT_TIMESTAMP,
+                picture_file  = #{pictureFile},
+                user_type     = #{userType}
+        WHERE user_id = #{userId}    
+    </update>
+    
+    <update id="changeUserStatus" parameterType="java.util.Map">
+     /* QUERY ID : changeUserStatus */
+        UPDATE FRWK_CMM_USERINFO SET
+                 use_yn = upper(#{useYn}), 
+                 pwdfail_cnt = #{pwdfailCnt} 
+         WHERE user_id = #{userId}    
+    </update>
+
+    <delete id="deleteUserInfo" parameterType="java.lang.String">
+     /* QUERY ID : deleteUserInfo */
+        DELETE FROM FRWK_CMM_USERINFO WHERE user_id = #{userId}    
+    </delete>    
+
+    <!-- 사용자와 맵핑된 롤목록을 얻는다. -->
+    <select id="getUserRoles" parameterType="java.util.Map" resultType="roleDto">
+     /* QUERY ID : getUserRoles */
+        SELECT b.role_id roleId,
+               b.role_name roleName,
+               b.role_desc roleDesc,
+               b.use_yn useYn,
+               b.create_dt createDt
+          FROM frwk_cmm_roleusermap a, frwk_cmm_roleinfo b
+         WHERE a.user_id = #{userId} AND a.role_id = b.role_id;
+    </select>
+    <select id="getUserRolesNotMapping" parameterType="java.util.Map" resultType="roleDto">
+     /* QUERY ID : getUserRolesNotMapping */
+        SELECT role_id roleId, role_name roleName, role_desc roleDesc, use_yn useYn, create_dt createDt
+          FROM frwk_cmm_roleinfo
+         WHERE role_id NOT IN (SELECT a.role_id
+                                 FROM frwk_cmm_roleusermap a, frwk_cmm_roleinfo b
+                                WHERE a.user_id = #{userId}  AND a.role_id = b.role_id)
+    </select>
+            
+    <insert id="applyMapping" parameterType="java.util.List">
+    /* QUERY ID : applyMapping */
+        INSERT INTO frwk_cmm_roleusermap (user_id, role_id) VALUES
+         <foreach collection="list" index="index" item="item">       
+            <if test="index != 0"> , </if> 
+             ( #{item.userId}, #{item.roleId} )
+         </foreach>
+    </insert>
+    <delete id="removeMapping" parameterType="java.util.Map">
+    /* QUERY ID : removeMapping */
+        DELETE FROM frwk_cmm_roleusermap
+         WHERE user_id = #{userId}
+           AND role_id IN ( 
+          <foreach collection="list" index="index" item="item">       
+                <if test="index != 0"> , </if> 
+                #{item}
+          </foreach>        
+           )
+    </delete>            
+
+    <update id="setLoginTryCnt" parameterType="java.util.Map">
+     /* QUERY ID : setLoginTryCnt */
+        UPDATE FRWK_CMM_USERINFO SET  pwdfail_cnt = #{pwdfailCnt} WHERE user_id = #{userId}    
+    </update>
+    
+    <update id="setLastLoginTime" parameterType="java.util.Map">
+     /* QUERY ID : setLastLoginTime */
+        UPDATE FRWK_CMM_USERINFO SET  login_dt = #{loginDt} WHERE user_id = #{userId}    
+    </update>
+            
+</mapper>

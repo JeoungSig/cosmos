@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Money Collect Management : For Manager -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Money Collect management main -->
+    <definition name="business/money/manage/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Money Collect > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/moneyCollectStatusList.jsp" />
+    </definition>
+
+    <!-- Money collect information detail view -->
+    <definition name="business/money/manage/viewMoneyCollectInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Collect > View Money Collection" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/popup/viewMoneyCollectInfo.jsp" />
+    </definition>
+     
+     
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Booth Rent Fee Management -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Booth Rent Fee Management : Main -->
+    <definition name="business/money/manage/boothrentfeepay/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Booth rent fee > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/boothRentFeePayList.jsp" />
+    </definition>
+
+    <!-- Booth Rent Fee Management : Detail View -->
+    <definition name="business/money/manage/boothrentfeepay/viewBoothRentFeePayInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth rent fee > Detail View" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/popup/viewBoothRentFeePayInfo.jsp" />
+    </definition>
+
+    <!-- Booth Rent Fee Management : Regist -->
+    <definition name="business/money/manage/boothrentfeepay/boothRentFeePayInfoRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth rent fee > Regist" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/popup/boothRentFeePayInfoRegistForm.jsp" />
+    </definition>
+    
+    <!-- Booth Rent Fee Management : Modify -->
+    <definition name="business/money/manage/boothrentfeepay/boothRentFeePayInfoModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth rent fee > Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/popup/boothRentFeePayInfoModifyForm.jsp" />
+    </definition>
+
+    <!-- Booth Rent Fee Management : Main -->
+    <definition name="business/money/manage/boothrentfeepay/status/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Booth rent fee > Status" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/boothRentFeePayStatus.jsp" />
+    </definition>     
+    <definition name="business/money/manage/boothrentfeepay/status/renFeePayStatus" extends="layout/framework/popup">
+        <put-attribute name="title" value="Booth rent fee > Status" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/boothRentFeePayStatus.jsp" />
+    </definition>     
+     
+     
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Money Refund -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Money Refund main -->
+    <definition name="business/money/refund/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Money Refund > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/refund/moneyRefundList.jsp" />
+    </definition>
+    <!-- Money Refund Regist Form -->
+    <definition name="business/money/refund/moneyRefundRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Refund > New Refund" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/refund/popup/moneyRefundRegistForm.jsp" />
+    </definition>
+    <!-- Money Refund Detail View Form -->
+    <definition name="business/money/refund/moneyRefundInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Refund > Detail Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/refund/popup/moneyRefundInfo.jsp" />
+    </definition>    
+    <!-- Money Refund Regist Form -->
+    <definition name="business/money/refund/moneyRefundModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Refund > Modify Refund" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/refund/popup/moneyRefundModifyForm.jsp" />
+    </definition>
+    
+    <!-- Money Refund : Select Booth -->
+    <definition name="business/money/refund/selectBooth" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Refund > Select Booth" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/refund/popup/selectBooth.jsp" />
+    </definition>
+    
+    <!-- Money Refund : Select Address -->
+    <definition name="business/money/refund/selectAddress" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Refund > Select Address" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/refund/popup/selectAddress.jsp" />
+    </definition>
+ 
+ 
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Check deposit -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <definition name="business/money/manage/deposit/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Check deposit> Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/checkMoneyDeposit.jsp" />
+    </definition>
+    <definition name="business/money/manage/deposit/bankDepositInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Deposit > Deposit" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/manage/popup/moneyDepositInfo.jsp" />
+    </definition>
+    
+
+         
+</tiles-definitions>

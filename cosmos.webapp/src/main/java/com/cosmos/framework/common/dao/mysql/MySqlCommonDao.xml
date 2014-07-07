@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlCommonDao">
+
+    <select id="getPostAddrByZipcd" parameterType="java.lang.String" resultType="postAddrDto">
+    /* QUERY ID : getPostAddrByZipcd */
+        SELECT pcode,
+               locality,
+               state,
+               comment
+          FROM frwk_cmm_auszipcd
+         WHERE pcode = #{pcode}
+    </select>
+    
+    <select id="getStateByZipcd" parameterType="java.util.Map" resultType="java.lang.String">
+    /* QUERY ID : getStateByZipcd */
+        SELECT DISTINCT (zipcd.state) state
+          FROM (SELECT pcode,
+                       locality,
+                       state,
+                       comment
+                  FROM frwk_cmm_auszipcd
+                 WHERE pcode = #{pcode}) zipcd
+    </select>
+
+    <select id="getStateList" resultType="java.lang.String">
+    /* QUERY ID : getStateList */
+        SELECT DISTINCT state FROM frwk_cmm_auszipcd
+    </select>
+    
+    
+    <select id="getAddressList" parameterType="java.util.Map" resultType="postAddrDto">
+    /* QUERY ID : getAddressList */
+        SELECT pcode,
+               locality,
+               state,
+               comment
+          FROM frwk_cmm_auszipcd
+         WHERE 1 = 1
+         <if test="pcode != null">  AND pcode = #{pcode} </if>                   
+         <if test="locality != null">  AND UPPER(locality) LIKE CONCAT('%','${locality}', '%') </if>
+         <if test="state != null">  AND UPPER(state) = UPPER(#{state}) </if>
+         ORDER BY state ASC, locality ASC
+    </select>    
+            
+</mapper>
