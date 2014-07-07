@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlMoneyDepositDao">
+
+    <select id="getDepositedMoneyCollectCnt" resultType="java.lang.Integer">
+        /* QUERY ID : getDepositedMoneyCollectCnt */
+        SELECT COUNT(*) FROM ptm_money_collect WHERE deposit_id = #{depositId}
+    </select>
+
+   <update id="markDepositIdToCollectInfo" parameterType="java.util.Map">
+   /* QUERY ID : markDepositIdToCollectInfo */
+        UPDATE ptm_money_collect SET deposit_id = #{depositId}  WHERE collect_id = #{collectId} 
+   </update>
+   
+   <update id="unmarkDepositIdToCollectInfo" parameterType="java.util.Map">
+   /* QUERY ID : unmarkDepositIdToCollectInfo */
+        UPDATE ptm_money_collect SET deposit_id = null  WHERE deposit_id = #{depositId} 
+   </update>
+   
+    <select id="getBankDepositInfo" parameterType="java.util.Map" resultType="moneyDepositDto">
+     /* QUERY ID : getBankDepositInfo */   
+       SELECT a.deposit_id depositId,
+           a.bank_dt bankDt,
+           a.bank_total_amount bankTotalAmount,
+           a.create_dt createDt,
+           a.modify_dt modifyDt,
+           a.bank_year bankYear,
+           a.bank_month bankMonth,
+           a.bank_day bankDay,
+           a.status status,
+           b.code_name statusName,
+           a.creator creator,
+           a.comment comment,
+           c.first_name creatorName
+      FROM ptm_money_deposit a
+          LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'COLLECT_STATUS ') b ON b.code_value = a.status
+          LEFT OUTER JOIN (SELECT user_id, first_name FROM frwk_cmm_userinfo) c ON c.user_id = a.creator
+      WHERE   a.deposit_id = #{depositId}
+  </select>
+  
+    <select id="getBankDepositList" parameterType="java.util.Map" resultType="moneyDepositDto">
+     /* QUERY ID : getBankDepositList */   
+       SELECT a.deposit_id depositId,
+           a.bank_dt bankDt,
+           a.bank_total_amount bankTotalAmount,
+           a.create_dt createDt,
+           a.modify_dt modifyDt,
+           a.bank_year bankYear,
+           a.bank_month bankMonth,
+           a.bank_day bankDay,
+           a.status status,
+           b.code_name statusName,
+           a.creator creator,
+           c.first_name creatorName,
+           a.comment comment
+      FROM ptm_money_deposit a
+          LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'COLLECT_STATUS ') b ON b.code_value = a.status
+          LEFT OUTER JOIN (SELECT user_id, first_name FROM frwk_cmm_userinfo) c ON c.user_id = a.creator
+      WHERE  1 = 1
+        <if test="depositId != null">  AND a.deposit_id = #{depositId} </if>     
+        <if test="bankYear != null">  AND a.bank_year = #{bankYear} </if>     
+        <if test="bankMonth != null">  AND a.bank_month = #{bankMonth} </if>     
+        <if test="bankDay != null">  AND a.bank_day = #{bankDay} </if>     
+        <if test="status != null">  AND a.status = #{status} </if>     
+        <if test="creator != null">  AND a.creator = #{creator} </if>     
+        <if test="fromBankDt != null and toBankDt != null">  AND DATE_FORMAT(STR_TO_DATE(a.bank_dt, '%d/%m/%Y'),'%Y-%m-%d') BETWEEN DATE_FORMAT(STR_TO_DATE(#{fromBankDt}, '%d/%m/%Y'),'%Y-%m-%d') AND DATE_FORMAT(STR_TO_DATE(#{toBankDt}, '%d/%m/%Y'),'%Y-%m-%d') </if>     
+  </select>
+  
+    <delete id="deleteBankDepositInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteBankDepositInfo */                 
+        DELETE FROM ptm_money_deposit WHERE deposit_id = #{depositId} 
+    </delete>  
+   
+    <select id="getCreatorList" resultType="userDto">
+     /* QUERY ID : getCreatorList */
+        SELECT user_id userId, first_name firstName
+          FROM frwk_cmm_userinfo
+         WHERE user_id IN (SELECT DISTINCT creator FROM ptm_money_deposit)
+    </select>   
+    
+    <select id="getBankDepositNewId" resultType="java.lang.String">
+     /* QUERY ID : getBankDepositNewId */
+        SELECT (coalesce(max(deposit_id), 0) + 1) FROM ptm_money_deposit
+    </select>   
+   
+    <insert id="insertBankDepositInfo" parameterType="java.util.Map">
+     /* QUERY ID : insertBankDepositInfo */
+        INSERT INTO ptm_money_deposit(
+               deposit_id,
+               bank_dt,
+               bank_total_amount,
+               bank_year,
+               bank_month,
+               bank_day,
+               status,
+               creator,
+               comment,
+               create_dt,
+               modify_dt)
+        VALUES (#{depositId},
+                    #{bankDt},
+                    #{bankTotalAmount},
+                    #{bankYear},
+                    #{bankMonth},
+                    #{bankDay},
+                    #{status},
+                    #{creator},
+                    #{comment},
+                    CURRENT_TIMESTAMP,
+                    CURRENT_TIMESTAMP)
+    </insert>
+    
+  <update id="changeBankDepositInfo" parameterType="java.util.Map">
+   /* QUERY ID : changeBankDepositInfo */
+        UPDATE ptm_money_deposit SET
+               <if test="bankDt != null"> bank_dt = #{bankDt}, </if>
+               <if test="bankTotalAmount != null"> bank_total_amount = #{bankTotalAmount}, </if>
+               <if test="bankYear != null"> bank_year = #{bankYear}, </if>
+               <if test="bankMonth != null"> bank_month = #{bankMonth}, </if>
+               <if test="bankDay != null"> bank_day = #{bankDay}, </if>
+               <if test="status != null"> status = #{status}, </if>
+               <if test="creator != null"> creator = #{creator}, </if>
+               <if test="comment != null"> comment = #{comment}, </if>
+               modify_dt = CURRENT_TIMESTAMP
+         WHERE deposit_id = #{depositId}      
+   </update>     
+     
+  <update id="changeBankDepositStatus" parameterType="java.util.Map">
+   /* QUERY ID : changeBankDepositStatus */
+        UPDATE ptm_money_deposit SET
+               status = upper(#{status}),
+               modify_dt = CURRENT_TIMESTAMP
+         WHERE deposit_id = #{depositId}      
+   </update>       
+   
+</mapper>

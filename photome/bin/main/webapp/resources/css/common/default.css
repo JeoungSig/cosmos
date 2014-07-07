@@ -1,0 +1,130 @@
+
+@CHARSET "UTF-8";
+
+/*********************************************/
+/* Default HTML Element */
+/*********************************************/
+BODY, DIV, P, H1, H2, H3, UL, OL, SPAN, A, TABLE, TD, FORM, IMG, LI, BUTTON {
+  font-family: Dotum, DotumChe, Verdana, Geneva, Arial, Helvetica, crns-serif;
+  font-size: 12px;
+}
+
+BODY {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+}
+
+IMG {
+    border: 'none';
+}
+
+INPUT {
+    border: 1px solid #99BBE8; 
+    margin-top: 2px;
+    padding-right: 2px;
+    font-size: 12px;
+}
+
+TEXTAREA {
+    border: 1px solid #99BBE8; 
+    height: 3em;
+}
+
+SELECT {
+    font-size: 12px;
+    color: #3F4905;
+}
+
+INPUT.disabled, TEXTAREA.disabled {
+    background: #E3E3E3; 
+    color: #6F626F;
+}
+
+INPUT.radio, INPUT.checkbox {
+    border : none;
+}
+
+/** 말줄임 */
+NOBR.shortcut, TH.shortcut, TD.shortcut, DIV.shortcut, SPAN.shortcut {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+DIV.paging A:link    { color: #888888; text-decoration: none; }
+DIV.paging A:active  { color: #888888; text-decoration: none; }
+DIV.paging A:visited { color: #888888; text-decoration: none; }
+DIV.paging A:hover   { color: #3D3D3D; text-decoration: underline overline; }
+
+DIV.paging {
+    text-align: center;
+    margin-top: 11px;
+    margin-bottom: 15px;
+    font-size: 12px;
+    font-family: Arial;
+    color: #383838;
+}
+DIV.paging A {
+    font-size: 11px;
+    font-family: Arial;
+}
+
+DIV.paging TD {
+    font-size: 12px;
+    font-family: Arial;
+    color: #383838;
+}
+DIV.paging TD A {
+    font-size: 11px;
+    font-family: Arial;
+}
+
+DIV.mainMenu {
+    margin-top: 8px;
+    margin-bottom: 4px;
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: Arial;
+    font-weight: bold; 
+}
+DIV.subMenu {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 10px;
+    font-size: 12px;
+    font-family: Arial;
+    color: #ffffff;
+}
+
+/* (Right Top) Site Navigation */
+#nav {
+    float: left;
+    padding-right: 10px;
+    font-size: 12px;
+    color: #800000;
+    font-weight: bold;
+    text-indent:10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#nav SPAN, #nav #nav_highlight {
+    font-weight: bold;
+}
+
+.required {
+    color: #B30000;
+}
+
+H2.ckbox {
+    background-image: url('/photome/resources/images/common/h2_checkbox_bullet.gif');
+    background-repeat: no-repeat;
+    background-position: left Top;
+    color:#464646;
+    font-size: 14px;
+    text-align:bottom;
+    LETTER-SPACING: -1px;
+    font-weight:bold;
+    PADDING-left: 17px;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,96 @@
+
+@CHARSET "UTF-8";
+
+/* Search Panel */
+#search {
+    clear: both;
+    width: 60%;
+    border: 1px solid #9ec8ff;
+    background-color: #f4fbfe;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px 15px 5px 15px;
+}
+#search TD {
+    font-size: 12px;
+}
+/* Search Panel > Form Controls */
+#search SELECT {
+	border: 1px solid #9ec8ff;
+	height: 18px;
+}
+#search INPUT {
+    border: 1px solid #99BBE8; 
+    margin-top: 2px;
+}
+#search INPUT[type='text'], #search INPUT[type='password'] {
+    border: 1px solid red;
+}
+#search INPUT[type="checkbox"], #search INPUT[type="radio"] {
+     border: none; 
+}
+
+#search INPUT.radio, #search INPUT.checkbox {
+    border : none;
+}
+
+#search TEXTAREA {
+    border: 1px solid #99BBE8; 
+    width: 100%;
+    height: 3em;
+}
+#search BUTTON {
+    border: none;
+    font-size: 12px;
+    padding-top: 2px;
+    margin-left: 3px;
+    margin-right: 3px;
+    color:#264390;
+    background-repeat:no-repeat;
+    background-color:transparent;
+    cursor: hand;
+}
+
+
+#search TABLE.search_table TD.label {
+    background-image: url('/photome/resources/images/common/table/search_label_bar.gif');
+    background-position: center right;
+    background-repeat: no-repeat;
+    color: #004182;
+    font-weight: bold;
+    padding-left: 8px;
+    padding-right: 5px;
+    text-align: right;
+}
+
+#search TABLE.search_table TD {
+    padding-left: 8px;
+}
+#search TABLE.search_table TD.button {
+    text-align: right;
+    padding-right: 10px;
+}
+
+/* Search Panel > 글자개수에 따른 버튼배경 */
+#search BUTTON.word2 { background-image: url('/photome/resources/images/button/btn_sub_word2.gif'); width: 43px; height: 19px; }
+#search BUTTON.word3 { background-image: url('/photome/resources/images/button/btn_sub_word3.gif'); width: 56px; height: 19px; }
+#search BUTTON.word4 { background-image: url('/photome/resources/images/button/btn_sub_word4.gif'); width: 67px; height: 19px; }
+#search BUTTON.word5 { background-image: url('/photome/resources/images/button/btn_sub_word5.gif'); width: 79px; height: 19px; }
+#search BUTTON.word6 { background-image: url('/photome/resources/images/button/btn_sub_word6.gif'); width: 91px; height: 19px; }
+#search BUTTON.word7 { background-image: url('/photome/resources/images/button/btn_sub_word7.gif'); width: 104px; height: 19px; }
+#search BUTTON.word8 { background-image: url('/photome/resources/images/button/btn_sub_word8.gif'); width: 116px; height: 19px; }
+#search BUTTON.word9 { background-image: url('/photome/resources/images/button/btn_sub_word9.gif'); width: 129px; height: 19px; }
+#search BUTTON.word10 { background-image: url('/photome/resources/images/button/btn_sub_word10.gif'); width: 139px; height: 19px; }
+
+#search BUTTON.save { background-image: url('/photome/resources/images/button/btn_sub_save.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px; }
+#search BUTTON.close { background-image: url('/photome/resources/images/button/btn_sub_close.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+#search BUTTON.search { background-image: url('/photome/resources/images/button/btn_sub_search.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+#search BUTTON.insert { background-image: url('/photome/resources/images/button/btn_sub_insert.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+#search BUTTON.update { background-image: url('/photome/resources/images/button/btn_sub_update.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+#search BUTTON.delete { background-image: url('/photome/resources/images/button/btn_sub_delete.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+#search BUTTON.list { background-image: url('/photome/resources/images/button/btn_sub_list.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+#search BUTTON.cancel { background-image: url('/photome/resources/images/button/btn_sub_word2.gif'); width: 43px; height: 19px; }
+#search BUTTON.file { background-image: url('/photome/resources/images/button/btn_sub_file.gif'); width: 79px; height: 19px; text-align:left; padding-left:22px;}
+#search BUTTON.excel_import { background-image: url('/photome/resources/images/button/btn_sub_excel_import.gif'); width: 106px; height: 19px; text-align:left; padding-left:26px;}
+#search BUTTON.excel_export { background-image: url('/photome/resources/images/button/btn_sub_excel_export.gif'); width: 106px; height: 19px; text-align:left; padding-left:26px;}

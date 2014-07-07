@@ -1,0 +1,66 @@
+
+@CHARSET "UTF-8";
+
+BUTTON {
+    border: none;
+    font-size: 12px;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-top: 2px;
+    color: #264390;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    cursor: hand;
+}
+BUTTON.word2 { background-image: url('/photome/resources/images/button/btn_sub_word2.gif'); width: 43px; height: 19px; }
+BUTTON.word3 { background-image: url('/photome/resources/images/button/btn_sub_word3.gif'); width: 56px; height: 19px; }
+BUTTON.word4 { background-image: url('/photome/resources/images/button/btn_sub_word4.gif'); width: 67px; height: 19px; }
+BUTTON.word5 { background-image: url('/photome/resources/images/button/btn_sub_word5.gif'); width: 79px; height: 19px; }
+BUTTON.word6 { background-image: url('/photome/resources/images/button/btn_sub_word6.gif'); width: 91px; height: 19px; }
+BUTTON.word7 { background-image: url('/photome/resources/images/button/btn_sub_word7.gif'); width: 104px; height: 19px; }
+BUTTON.word8 { background-image: url('/photome/resources/images/button/btn_sub_word8.gif'); width: 116px; height: 19px; }
+BUTTON.word9 { background-image: url('/photome/resources/images/button/btn_sub_word9.gif'); width: 129px; height: 19px; }
+BUTTON.word10 { background-image: url('/photome/resources/images/button/btn_sub_word10.gif'); width: 139px; height: 19px; }
+
+BUTTON.save { background-image: url('/photome/resources/images/button/btn_sub_save.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px; }
+BUTTON.close { background-image: url('/photome/resources/images/button/btn_sub_close.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+BUTTON.search { background-image: url('/photome/resources/images/button/btn_sub_search.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+BUTTON.insert { background-image: url('/photome/resources/images/button/btn_sub_insert.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+BUTTON.update { background-image: url('/photome/resources/images/button/btn_sub_update.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+BUTTON.delete { background-image: url('/photome/resources/images/button/btn_sub_delete.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+BUTTON.list { background-image: url('/photome/resources/images/button/btn_sub_list.gif'); width: 51px; height: 19px; text-align:left; padding-left:21px;}
+BUTTON.cancel { background-image: url('/photome/resources/images/button/btn_sub_word2.gif'); width: 43px; height: 19px; }
+BUTTON.file { background-image: url('/photome/resources/images/button/btn_sub_file.gif'); width: 79px; height: 19px; text-align:left; padding-left:22px;}
+BUTTON.excel_import { background-image: url('/photome/resources/images/button/btn_sub_excel_import.gif'); width: 106px; height: 19px; text-align:left; padding-left:26px;}
+BUTTON.excel_export { background-image: url('/photome/resources/images/button/btn_sub_excel_export.gif'); width: 106px; height: 19px; text-align:left; padding-left:26px;}
+
+.main_control {
+    text-align: right;
+    padding-right: 0px;
+    padding-left: 10px;
+    margin-bottom: 0px;
+    margin-top: 3px;
+}
+
+.main_control BUTTON {
+    height: 23px;
+    text-align: center;
+    padding: 0;
+    padding-top: 1px;
+}
+.main_control BUTTON P {
+    font-size: 11px;
+    color: #FFFFFF;
+    height: 1em;
+    font-family: Dotum;
+    filter: FILTER: Shadow(Color=#000000, Direction=135, Strength=1);
+}
+.main_control BUTTON.word2 { background-image: url('/photome/resources/images/button/subaction_word2.gif'); width: 45px; }
+.main_control BUTTON.word3 { background-image: url('/photome/resources/images/button/subaction_word3.gif'); width: 55px; }
+.main_control BUTTON.word4 { background-image: url('/photome/resources/images/button/subaction_word4.gif'); width: 69px; }
+.main_control BUTTON.word5 { background-image: url('/photome/resources/images/button/subaction_word5.gif'); width: 78px; }
+.main_control BUTTON.word6 { background-image: url('/photome/resources/images/button/subaction_word6.gif'); width: 92px; }
+.main_control BUTTON.word7 { background-image: url('/photome/resources/images/button/subaction_word7.gif'); width: 102px; }
+.main_control BUTTON.word8 { background-image: url('/photome/resources/images/button/subaction_word8.gif'); width: 116px; }
+.main_control BUTTON.word9 { background-image: url('/photome/resources/images/button/subaction_word9.gif'); width: 126px; }
+.main_control BUTTON.word10 { background-image: url('/photome/resources/images/button/subaction_word10.gif'); width: 141px; }

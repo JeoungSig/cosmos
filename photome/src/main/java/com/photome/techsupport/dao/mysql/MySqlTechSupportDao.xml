@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlTechSupportDao">
+
+    <select id="getMaintenanceHistoryInfo" parameterType="java.util.Map" resultType="maintenanceHistoryDto">
+    /* QUERY ID : getMaintenanceHistoryInfo */
+         SELECT a.history_id historyId,
+                       d.status boothStatus,
+                       h.code_name boothStatusName,
+                       g.loc_state locState,
+                       c.group_id groupId,
+                       d.group_name groupName,
+                       a.subject subject,
+                       a.booth_id boothId,
+                       c.booth_name boothName,
+                       a.create_dt createDt,
+                       a.contents contents,
+                       a.creator creator,
+                       e.first_name creatorName,
+                       a.claim_type claimType,
+                       b.code_name claimTypeName,
+                       a.claim_status claimStatus,
+                       f.code_name claimStatusName,
+                       a.attach_file attachFile,
+                       a.update_dt updateDt,
+                       a.pst_street_no pstStreetNo,
+                       a.pst_suburb pstSuburb,
+                       a.pst_state pstState,
+                       a.pst_postcd pstPostcd
+          FROM ptm_maintenance_history a
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE     system_cd = 'PHOTOME' AND category_cd = 'CLAIM_TYPE') b ON a.claim_type = b.code_value
+               LEFT OUTER JOIN ptm_booth_info c ON a.booth_id = c.booth_id
+               LEFT OUTER JOIN ( SELECT a.history_id,
+                                       b.booth_id,
+                                       b.booth_name,
+                                       b.group_name,
+                                       b.status
+                                  FROM ptm_maintenance_history a,
+                                       (SELECT a.booth_id,
+                                               a.booth_name,
+                                               b.group_id,
+                                               b.group_name,
+                                               a.status
+                                          FROM ptm_booth_info a, ptm_booth_group b
+                                         WHERE a.group_id = b.group_id) b
+                                 WHERE a.booth_id = b.booth_id) d ON a.history_id = d.history_id
+               LEFT OUTER JOIN frwk_cmm_userinfo e ON e.user_id = a.creator
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'CLAIM_STATUS') f ON a.claim_status = f.code_value
+               LEFT OUTER JOIN (SELECT loc_state, booth_id from ptm_booth_info) g ON  g.booth_id = a.booth_id
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'BOOTH_STATUS') h ON d.status = h.code_value
+         WHERE a.history_id = #{historyId}
+    </select> 
+
+    <select id="getMaintenanceHistoryList" parameterType="java.util.Map" resultType="maintenanceHistoryDto">
+    /* QUERY ID : getMaintenanceHistoryList */
+         SELECT a.history_id historyId,
+                       g.loc_state locState,
+                       c.group_id groupId,
+                       d.group_name groupName,
+                       a.subject subject,
+                       a.booth_id boothId,
+                       c.booth_name boothName,
+                       a.create_dt createDt,
+                       a.contents contents,
+                       a.creator creator,
+                       e.first_name creatorName,
+                       a.claim_type claimType,
+                       b.code_name claimTypeName,
+                       a.claim_status claimStatus,
+                       f.code_name claimStatusName,
+                       a.attach_file attachFile,
+                       a.update_dt updateDt,
+                       a.pst_street_no pstStreetNo,
+                       a.pst_suburb pstSuburb,
+                       a.pst_state pstState,
+                       a.pst_postcd pstPostcd,
+                       d.groupUse,
+                       d.boothUse
+          FROM ptm_maintenance_history a
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE     system_cd = 'PHOTOME' AND category_cd = 'CLAIM_TYPE') b ON a.claim_type = b.code_value
+               LEFT OUTER JOIN ptm_booth_info c ON a.booth_id = c.booth_id
+               LEFT OUTER JOIN ( SELECT a.history_id,
+                                       b.booth_id,
+                                       b.booth_name,
+                                       b.group_name,
+                                       b.groupUse,
+                                       b.boothUse
+                                  FROM ptm_maintenance_history a,
+                                       (SELECT a.booth_id,
+                                               a.booth_name,
+                                               b.group_id,
+                                               b.group_name,
+                                               b.use_yn groupUse,
+                                               a.use_yn boothUse
+                                          FROM ptm_booth_info a, ptm_booth_group b
+                                         WHERE a.group_id = b.group_id) b
+                                 WHERE a.booth_id = b.booth_id) d ON a.history_id = d.history_id
+               LEFT OUTER JOIN frwk_cmm_userinfo e ON e.user_id = a.creator
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'CLAIM_STATUS') f ON a.claim_status = f.code_value
+               LEFT OUTER JOIN (SELECT loc_state, booth_id from ptm_booth_info) g ON  g.booth_id = a.booth_id
+         WHERE d.groupUse = 'Y' AND d.boothUse = 'Y'
+               <if test="groupId != null"> AND c.group_id IN (SELECT group_id FROM ptm_booth_info WHERE group_id = #{groupId} ) </if>
+               <if test="boothId != null">  AND a.booth_id = #{boothId} </if>
+               <if test="creator != null">  AND a.creator = #{creator} </if>
+               <if test="claimStatus != null">  AND a.claim_status = #{claimStatus} </if>
+               <if test="claimType != null">  AND a.claim_type = #{claimType} </if>
+               <if test="pstState != null">  AND g.loc_state = #{pstState} </if>
+         ORDER BY a.claim_status desc, a.create_dt desc      
+    </select> 
+
+    <select id="getTechnicianList" parameterType="java.util.Map" resultType="userDto">
+     /* QUERY ID : getTechnicianList */
+        SELECT  a.user_id         userId,          
+                a.passwd          passwd,          
+                a.pwdfail_cnt     pwdfailCnt,      
+                a.first_name      firstName,       
+                a.middle_name     middleName,      
+                a.last_name       lastName,        
+                a.addr_street     addrStreet,      
+                a.addr_suburb     addrSuburb,      
+                a.addr_state      addrState,       
+                a.addr_zipcd      addrZipcd,       
+                a.mobile_phone    mobilePhone,     
+                a.telephone       telephone,       
+                a.email           email,           
+                a.sex             sex,             
+                a.birth_dt        birthDt,         
+                a.ext_col1        extCol1,         
+                a.ext_col2        extCol2,         
+                a.ext_col3        extCol3,         
+                a.ext_col4        extCol4,         
+                a.ext_col5        extCol5,         
+                a.use_yn          useYn,           
+                a.create_dt       createDt,        
+                a.modify_dt       modifyDt,        
+                a.login_dt        loginDt,         
+                a.picture_file    pictureFile
+          FROM frwk_cmm_userinfo a
+         WHERE a.user_id IN (SELECT DISTINCT creator FROM ptm_maintenance_history)
+    </select>
+    
+    <select id="getNewMaintenanceHistoryId" resultType="java.lang.Integer">
+     /* QUERY ID : getNewMaintenanceHistoryId */
+        SELECT (coalesce(max(history_id), 0) + 1) FROM ptm_maintenance_history
+    </select>
+        
+    <insert id="insertMaintenanceHistory" parameterType="java.util.Map">
+     /* QUERY ID : insertBoothGroupInfo */
+        INSERT INTO ptm_maintenance_history (
+                         history_id
+                        ,subject
+                        ,booth_id
+                        ,create_dt
+                        ,contents
+                        ,creator
+                        ,claim_type
+                        ,claim_status
+                        ,attach_file
+                        ,update_dt
+                        ,pst_street_no
+                        ,pst_suburb
+                        ,pst_state
+                        ,pst_postcd)
+        VALUES (     #{historyId}
+                    ,#{subject}
+                    ,#{boothId}
+                    , CURRENT_TIMESTAMP
+                    ,#{contents}
+                    ,#{creator}
+                    ,#{claimType}
+                    ,#{claimStatus} 
+                    ,#{attachFile}
+                    , CURRENT_TIMESTAMP
+                    ,#{pstStreetNo}
+                    ,#{pstSuburb}
+                    ,#{pstState}
+                    ,#{pstPostcd}   )
+    </insert> 
+                               
+   <update id="updateMaintenanceHistory" parameterType="java.util.Map">
+   /* QUERY ID : updateMaintenanceHistory */
+        UPDATE ptm_maintenance_history SET
+               <if test="subject != null"> subject    = #{subject},</if> 
+               <if test="boothId != null"> booth_id   = #{boothId},</if> 
+               <if test="contents != null"> contents  = #{contents},</if> 
+               <if test="claimType != null"> claim_type  = #{claimType},</if> 
+               <if test="claimStatus != null"> claim_status  = #{claimStatus},</if> 
+               <if test="attachFile != null"> attach_file  = #{attachFile},</if> 
+               <if test="pstStreetNo != null"> pst_street_no  = #{pstSuburb},</if> 
+               <if test="pstSuburb != null"> pst_suburb  = #{pstStreetNo},</if> 
+               <if test="pstState != null"> pst_state  = #{pstState},</if> 
+               <if test="pstPostcd != null"> pst_postcd  = #{pstPostcd},</if> 
+               update_dt   = CURRENT_TIMESTAMP        
+         WHERE history_id = #{historyId} 
+    </update>                    
+
+    <select id="getHistoryCommentInfo" parameterType="java.util.Map" resultType="maintenanceCommentHistoryDto">
+     /* QUERY ID : getHistoryComment */
+        SELECT a.comment_id commentId,
+               a.comment comment,
+               a.history_id historyId,
+               a.create_dt createDt,
+               a.creator creator,
+               b.first_name creatorName
+          FROM ptm_maintenance_comment a
+                LEFT OUTER JOIN frwk_cmm_userinfo b ON a.creator = b.user_id
+         WHERE a.comment_id = #{commentId}
+        ORDER BY a.create_dt DESC
+    </select>
+    
+    <select id="getHistoryCommentList" parameterType="java.util.Map" resultType="maintenanceCommentHistoryDto">
+     /* QUERY ID : getHistoryComment */
+         SELECT a.comment_id commentId,
+                       a.comment comment,
+                       a.history_id historyId,
+                       a.create_dt createDt,
+                       a.creator creator,
+                       b.first_name creatorName
+                  FROM ptm_maintenance_comment a 
+                        LEFT OUTER JOIN frwk_cmm_userinfo b ON a.creator = b.user_id
+                 WHERE a.history_id = #{historyId}
+                ORDER BY a.create_dt DESC
+    </select>
+
+    <select id="getNewHistoryCommentId" resultType="java.lang.Integer">
+     /* QUERY ID : getNewHistoryCommentId */
+        SELECT (coalesce(max(comment_id), 0) + 1) FROM ptm_maintenance_comment
+    </select>
+    
+    <insert id="insertHistoryComment" parameterType="java.util.Map">
+     /* QUERY ID : insertHistoryComment */
+         INSERT INTO ptm_maintenance_comment( comment_id, comment, history_id, creator)  
+                                     VALUES ( #{commentId}, #{comment}, #{historyId}, #{creator} )
+    </insert> 
+     
+    <update id="updateHistoryComment" parameterType="java.util.Map">
+    /* QUERY ID : updateHistoryComment */                 
+        UPDATE ptm_maintenance_comment
+           SET comment = #{comment}
+         WHERE comment_id = #{commentId} 
+    </update>
+    
+    <delete id="deleteHistoryComment" parameterType="java.util.Map">
+    /* QUERY ID : updateHistoryComment */                 
+        DELETE FROM ptm_maintenance_comment WHERE comment_id = #{commentId}   
+    </delete>
+ 
+                        
+</mapper>

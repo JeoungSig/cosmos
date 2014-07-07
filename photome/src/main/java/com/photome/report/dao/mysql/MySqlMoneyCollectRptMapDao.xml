@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlMoneyCollectRptMapDao">
+
+    <select id="getCollectRealIncomeMap" parameterType="hashmap" resultType="moneyCollectDto">
+     /* QUERY ID : getCollectRealIncomeMap */
+        SELECT a.booth_id boothId, 
+               a.collect_month collectMonth, 
+               SUM(a.collect_real_income) collectRealIncome
+          FROM ptm_money_collect a
+         WHERE a.group_id = #{groupId}
+           <choose>
+                <when test="collectStatus == null"> AND a.collect_status = 'FINALCHK_FINISH'</when>
+                <when test="collectStatus != null"> AND a.collect_status = #{collectStatus}</when>
+           </choose>
+           <choose>
+                <when test="fromCollectYear != null and toCollectYear != null"> AND a.collect_year BETWEEN #{fromCollectYear} AND #{toCollectYear} </when>
+                <otherwise>
+                    <if test="collectYear != null"> AND a.collect_year = #{collectYear}</if>
+                </otherwise>
+           </choose>
+           <if test="fromReqDt != null and toReqDt != null"></if>
+        GROUP BY a.booth_id, a.collect_month
+    </select> 
+    
+    <select id="getCollectRealIncomeMapByGroup" parameterType="hashmap" resultType="moneyCollectDto">
+     /* QUERY ID : getCollectRealIncomeMapByGroup */
+        SELECT concat(group_id, '|', collect_month) collectid,
+               sum(collect_real_income) collectrealincome
+          FROM ptm_money_collect
+         WHERE 1 = 1
+           <choose>
+                <when test="collectStatus == null"> AND collect_status = 'FINALCHK_FINISH'</when>
+                <when test="collectStatus != null"> AND collect_status = #{collectStatus}</when>
+           </choose>
+           <choose>
+                <when test="fromCollectYear != null and toCollectYear != null"> AND collect_year BETWEEN #{fromCollectYear} AND #{toCollectYear} </when>
+                <otherwise>
+                    <if test="collectYear != null"> AND collect_year = #{collectYear}</if>
+                </otherwise>
+           </choose>
+        GROUP BY group_id, collect_month
+    </select> 
+    
+    
+    
+    
+    <select id="getBoothRentFeeAmountMap" parameterType="hashmap" resultType="boothRentFeeDto">
+     /* QUERY ID : getBoothRentFeeMap */
+        SELECT a.booth_id boothId,
+               a.rent_month rentMonth,
+               SUM(a.rent_amount) rentAmount
+          FROM ptm_rent_fee a
+         WHERE a.booth_id = #{boothId} AND a.rent_year = #{year}
+         GROUP BY a.rent_month 
+    </select> 
+    <select id="getBoothRentFeePercentMap" parameterType="hashmap" resultType="boothRentFeeDto">
+     /* QUERY ID : getBoothRentFeePercentMap */
+        SELECT a.booth_id boothId,
+               a.rent_month rentMonth,
+               SUM(a.rent_percent) rentPercent
+          FROM ptm_rent_fee a
+         WHERE a.booth_id = #{boothId} AND a.rent_year = #{year}
+         GROUP BY a.rent_month 
+    </select>     
+    <select id="getCollectAmountForRentFeePercentMap" parameterType="hashmap" resultType="moneyCollectDto">
+     /* QUERY ID : getCollectAmountForRentFeePercentMap */
+            SELECT a.booth_id boothId,
+                   a.collect_month collectMonth, 
+                   sum(a.collect_real_income) collectRealIncome
+          FROM ptm_money_collect a
+         WHERE     a.booth_id = #{boothId}
+               AND a.collect_status = 'FINALCHK_FINISH'
+               AND a.collect_year = #{year}
+        GROUP BY a.collect_month
+    </select>     
+    
+    <select id="getBoothRentFeeForOnsitePayMapHashMap" parameterType="hashmap" resultType="boothRentFeeDto">
+     /* QUERY ID : getBoothRentFeeForOnsitePayMapHashMap */
+        SELECT CONCAT(booth_id, '|', collect_month) boothId,
+               SUM(rent_amount) rentAmount
+          FROM ptm_money_collect
+         WHERE pay_onsite = 'Y' AND onsite_is_paid = 'Y'
+               <if test="groupId != null"> AND group_id = #{groupId}</if>
+               <choose>
+                    <when test="fromCollectYear != null and toCollectYear != null"> AND collect_year BETWEEN #{fromCollectYear} AND #{toCollectYear} </when>
+                    <otherwise>
+                        <if test="collectYear != null"> AND collect_year = #{collectYear}</if>
+                    </otherwise>
+               </choose>      
+        GROUP BY booth_id, collect_month
+    </select> 
+    
+    
+    <select id="getRefundMap" parameterType="hashmap" resultType="refundDto">
+     /* QUERY ID : getRefundMap */
+        SELECT a.booth_id boothId,
+               SUBSTRING(a.refund_dt,4,2) refundDt,
+               SUM(a.refund_amount) refundAmount
+          FROM ptm_refund a
+         WHERE REFUND_STATUS = 'REFUND'
+           <choose>
+                <when test="fromCollectYear != null and toCollectYear != null"> AND SUBSTRING(a.refund_dt,-4) BETWEEN #{fromCollectYear} AND #{toCollectYear} </when>
+                <otherwise>
+                    <if test="collectYear != null"> AND SUBSTRING(a.refund_dt,-4) = #{collectYear}</if>
+                </otherwise>
+           </choose>           
+         GROUP BY a.booth_id, SUBSTRING(a.refund_dt,4,2)  
+
+    </select> 
+    
+    <select id="getRefundMapByGroup" parameterType="hashmap" resultType="refundDto">
+     /* QUERY ID : getRefundMapByGroup */
+            SELECT CONCAT(b.group_id, '|', SUBSTRING(a.refund_dt, 4, 2)) refundId,
+                   SUM(a.refund_amount) refundAmount
+          FROM ptm_refund a
+               LEFT OUTER JOIN ptm_booth_info b ON b.booth_id = a.booth_id
+         WHERE refund_status = 'REFUND'
+           <choose>
+                <when test="fromCollectYear != null and toCollectYear != null"> AND SUBSTRING(refund_dt,-4) BETWEEN #{fromCollectYear} AND #{toCollectYear} </when>
+                <otherwise>
+                    <if test="collectYear != null"> AND SUBSTRING(refund_dt,-4) = #{collectYear}</if>
+                </otherwise>
+           </choose>         
+        GROUP BY b.group_id,  SUBSTRING(refund_dt,4,2)  
+    </select> 
+    
+                            
+</mapper>

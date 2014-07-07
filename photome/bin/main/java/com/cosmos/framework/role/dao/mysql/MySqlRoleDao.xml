@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlRoleDao">
+
+    <select id="roleList" parameterType="java.util.Map" resultType="roleDto">
+        SELECT role_id roleId,
+               role_name roleName,
+               role_desc roleDesc,
+               create_dt createDt,
+               use_yn useYn
+          FROM FRWK_CMM_ROLEINFO
+         WHERE 1 = 1 
+         <if test="roleName != null">  AND role_name like #{roleName} </if>
+    </select>
+    
+    <select id="getNewRoleId" resultType="java.lang.Integer">
+        SELECT (coalesce(max(role_id), 0) + 1) FROM frwk_cmm_roleinfo;
+    </select>
+    
+    <insert id="insertRoleInfo" parameterType="java.util.Map">
+        INSERT INTO frwk_cmm_roleinfo(role_id,
+                                  role_name,
+                                  role_desc,
+                                  use_yn)
+        VALUES (#{roleId},
+                #{roleName},
+                #{roleDesc},
+                upper(#{useYn}))
+    </insert>    
+    
+    <select id="getRoleInfo" parameterType="java.util.Map" resultType="roleDto">
+        SELECT role_id roleId,
+                role_name roleName,
+                role_desc roleDesc,
+                use_yn useYn,
+                create_dt createDt
+          FROM FRWK_CMM_ROLEINFO
+         WHERE role_id =  #{roleId}
+    </select>
+    
+    <update id="modifyRoleInfo" parameterType="java.util.Map">
+        UPDATE FRWK_CMM_ROLEINFO SET
+                role_name = #{roleName},
+                role_desc = #{roleDesc},
+              use_yn = upper(#{useYn})
+        WHERE role_id = #{roleId}    
+    </update>
+        
+    <update id="deleteRoleInfo" parameterType="java.lang.String">
+        DELETE FROM FRWK_CMM_ROLEINFO WHERE role_id = #{roleId}    
+    </update>    
+
+    <insert id="applyMappingWithService" parameterType="java.util.List">
+        INSERT INTO frwk_cmm_svcrolemap (svc_id, role_id) VALUES
+         <foreach collection="list" index="index" item="item">       
+            <if test="index != 0"> , </if> 
+             ( #{item.svcId}, #{item.roleId} )
+         </foreach>
+    </insert>
+    
+    <delete id="removeRoleMappingWithService" parameterType="java.util.Map">
+        DELETE FROM frwk_cmm_svcrolemap
+         WHERE role_id = #{roleId}
+           AND svc_id IN ( 
+          <foreach collection="list" index="index" item="item">       
+                <if test="index != 0"> , </if> 
+                #{item}
+          </foreach>        
+           )
+    </delete>
+            
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlAttachFileDao" >
+    <select id="getFileInfo" parameterType="java.util.Map" resultType="attachFileDto">
+     /* QUERY ID : getFileInfo */
+        SELECT a.file_id fileid,
+               a.file_name filename,
+               a.saved_name savedname,
+               a.info_type infotype,
+               a.file_type filetype,
+               a.file_size filesize,
+               a.create_dt createdt,
+               concat(b.data_upload_rootpath, '/', a.info_type, '/', a.saved_name) fullPath
+          FROM frwk_cmm_attach_file a, frwk_cmm_sysproperties b
+         WHERE a.file_id = #{fileId}  AND b.sys_id = '0'
+    </select>
+    
+    <select id="getNewFileId" resultType="java.lang.String">
+     /* QUERY ID : getNewFileId */
+        SELECT (coalesce(max(file_id), 0) + 1) FROM frwk_cmm_attach_file
+    </select>
+       
+    <select id="getRootPath" parameterType="java.lang.String" resultType="java.lang.String">
+     /* QUERY ID : getRootPath */
+        SELECT data_upload_rootpath dataUploadRootpath FROM frwk_cmm_sysproperties
+    </select>    
+    
+    <insert id="insertFileInfo" parameterType="java.util.Map">
+     /* QUERY ID : insertFileInfo */
+        INSERT INTO frwk_cmm_attach_file( file_id,
+                            file_name,
+                            saved_name,
+                            info_type,
+                            file_type,
+                            file_size)
+        VALUES (#{fileId},
+            #{fileName},
+            #{savedName},
+            upper(#{infoType}),
+            upper(#{fileType}),
+            #{fileSize}  )
+    </insert>  
+      
+    <update id="updateFileInfo" parameterType="java.util.Map">
+        UPDATE frwk_cmm_attach_file SET
+                    file_name = #{fileName},
+                   saved_name = #{savedName},
+                    info_type = upper(#{infoType}),
+                    file_type = upper(#{fileType}),
+                    file_size = #{fileSize}
+        WHERE file_id = #{fileId} 
+    </update>    
+    
+        
+    <delete id="deleteFileInfo" parameterType="java.lang.String">
+     /* QUERY ID : deleteFileInfo */
+        DELETE FROM frwk_cmm_attach_file WHERE file_id = #{fileId}    
+    </delete>    
+        
+</mapper>

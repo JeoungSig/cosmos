@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlBoothRentFeePayDao">
+
+    <select id="getBoothRentFeePayInfoList" parameterType="java.util.Map" resultType="boothRentFeePayDto">
+     /* QUERY ID : getBoothRentFeePayInfoList */
+        SELECT a.group_id groupId,
+               a.group_name groupName,
+               a.group_descript groupDescript,
+               a.manager_name managerName,
+               a.manager_tel managerTel,
+               a.manager_mobile managerMobile,
+               a.manager_email managerEmail,
+               a.contract_condition contractCondition,
+               a.group_comment groupComment,
+               a.use_yn useYn,
+               b.year year,
+               b.month month,
+               b.rent_fee rentFee,
+               b.rent_comment rentComment,
+               b.status status,
+               c.code_name statusName,
+               b.pay_dt payDt
+          FROM ptm_booth_group a
+               LEFT OUTER JOIN ptm_booth_payrent b ON b.group_id = a.group_id
+               LEFT OUTER JOIN frwk_cmm_code c ON c.system_cd = 'PHOTOME' AND c.category_cd = 'PAY_RENT_STATUS' AND c.code_value = b.status
+         WHERE a.use_yn = 'Y'
+           AND b.month in ('01','02','03','04','05','06','07','08','09','10','11','12')
+             <if test="groupId != null">  AND b.group_id = #{groupId} </if>                
+             <if test="year != null">  AND b.year = #{year} </if>                
+             <if test="month != null">  AND b.month = #{month} </if>                
+             <if test="status != null">  AND b.status = #{status} </if> 
+           ORDER BY c.code_name ASC, b.year DESC, b.month DESC, a.group_name ASC          
+    </select> 
+    
+    <select id="getBoothRentFeePayInfo" parameterType="java.util.Map" resultType="boothRentFeePayDto">
+     /* QUERY ID : getBoothRentFeePayInfo */
+        SELECT a.year year,
+               a.month month,
+               a.group_id groupId,
+               d.group_Name groupName,
+               a.rent_fee rentFee,
+               a.rent_comment rentComment,
+               a.update_dt updateDt,
+               a.create_dt createDt,
+               a.creator creator,
+               b.first_name creatorName,
+               a.updator updator,
+               a.pay_dt payDt,
+               c.first_name updatorName,
+               a.status status,
+               e.code_name statusName
+          FROM ptm_booth_payrent a
+               LEFT OUTER JOIN frwk_cmm_userinfo b ON b.user_id = a.creator
+               LEFT OUTER JOIN frwk_cmm_userinfo c ON c.user_id = a.updator
+               LEFT OUTER JOIN ptm_booth_group d ON d.group_id = a.group_id
+               LEFT OUTER JOIN frwk_cmm_code e ON e.system_cd = 'PHOTOME' AND e.category_cd = 'PAY_RENT_STATUS' AND e.code_value = a.status
+         WHERE a.group_id = #{groupId}  AND a.year = #{year} AND a.month = #{month}
+    </select> 
+    
+
+   <update id="updateBoothRentFeePayInfo" parameterType="java.util.Map">
+   /* QUERY ID : updateBoothRentFeePayInfo */
+        UPDATE ptm_booth_payrent SET 
+                <if test="payDt       != null"> pay_dt       = #{payDt},       </if>       
+                <if test="rentFee     != null"> rent_fee     = #{rentFee},     </if>       
+                <if test="rentComment != null"> rent_comment = #{rentComment}, </if>       
+                <if test="status      != null"> status       = #{status},      </if>
+                updator = #{updator},       
+                update_dt   = CURRENT_TIMESTAMP     
+         WHERE group_id = #{groupId}  AND year = #{year} AND month = #{month} 
+   </update>
+
+    <delete id="deleteBoothRentFeePayInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteBoothRentFeePayInfo */                 
+        DELETE FROM ptm_booth_payrent WHERE group_id = #{groupId}  AND year = #{year} AND month = #{month}   
+    </delete>
+
+   <update id="changeBoothRentFeePayStatus" parameterType="java.util.Map">
+   /* QUERY ID : changeBoothRentFeePayStatus */
+        UPDATE ptm_booth_payrent 
+           SET status  = #{status},  updator = #{updator},  update_dt  = CURRENT_TIMESTAMP 
+         WHERE group_id = #{groupId}  AND year = #{year} AND month = #{month} 
+   </update>
+
+    <insert id="registBoothRentFeePayInfo" parameterType="java.util.Map">
+     /* QUERY ID : registBoothRentFeePayInfo */
+        INSERT INTO ptm_booth_payrent(
+                      year,
+                      month,
+                      group_id,
+                      rent_fee,
+                      rent_comment,
+                      pay_dt,
+                      update_dt,
+                      create_dt,
+                      creator,
+                      updator,
+                      status)
+        VALUES (#{year},
+                #{month},
+                #{groupId},
+                #{rentFee},
+                #{rentComment},
+                #{payDt},
+                CURRENT_TIMESTAMP,
+                CURRENT_TIMESTAMP,
+                #{creator},
+                #{updator},
+                #{status});
+    </insert>
+    
+    
+                        
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Money Collect Management : For Technicians -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Money Collect management main -->
+    <definition name="business/money/collect/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Money Collect > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/collect/moneyCollectList.jsp" />
+    </definition>
+
+    <!-- Money collect information registration form -->
+    <definition name="business/money/collect/moneyCollectRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Collect > Information Registration for Money Collection" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/collect/popup/moneyCollectRegistForm.jsp" />
+    </definition>
+    
+    <!-- Money collect information detail view -->
+    <definition name="business/money/collect/viewMoneyCollectInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Collect > View Money Collection" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/collect/popup/viewMoneyCollectInfo.jsp" />
+    </definition>
+    
+    <!-- Money collect information modify form -->
+    <definition name="business/money/collect/moneyCollectModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Collect > Information Modify for Money Collection" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/collect/popup/moneyCollectModifyForm.jsp" />
+    </definition>
+    
+    <!-- Money collect : Set Bank account -->
+    <definition name="business/money/collect/setBankAccountForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Collect > Set Bank Account" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/bankAccount/setAccountForm.jsp" />
+    </definition>
+
+     
+</tiles-definitions>

@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlResourceManagerDao">
+
+    <select id="getBoothGroupInfo" parameterType="java.util.Map" resultType="boothGroupDto">
+    /* QUERY ID : getBoothGroupInfo */
+        SELECT a.group_id           groupId,          
+               a.group_name         groupName,        
+               a.group_descript     groupDescript,    
+               a.manager_name       managerName,      
+               a.manager_tel        managerTel,       
+               a.manager_mobile     managerMobile,    
+               a.manager_email      managerEmail,     
+               a.contract_condition contractCondition,
+               a.group_comment      groupComment,     
+               a.attach_file        attachFile,      
+               a.update_dt          updateDt, 
+               a.use_yn             useYn       
+          FROM ptm_booth_group a
+         WHERE a.group_id = #{groupId}
+    </select>
+    
+    <select id="getBoothGroupInfoList" parameterType="java.util.Map" resultType="boothGroupDto">
+    /* QUERY ID : getBoothGroupInfoList */
+        SELECT a.group_id           groupId,          
+               a.group_name         groupName,        
+               a.group_descript     groupDescript,    
+               a.manager_name       managerName,      
+               a.manager_tel        managerTel,       
+               a.manager_mobile     managerMobile,    
+               a.manager_email      managerEmail,     
+               a.contract_condition contractCondition,
+               a.group_comment      groupComment,     
+               a.attach_file        attachFile,      
+               a.update_dt          updateDt, 
+               a.use_yn             useYn       
+          FROM ptm_booth_group a
+         WHERE 1 = 1
+         <if test="groupName != null">  AND group_name like concat('%','#{groupName}', '%') </if>
+         <if test="groupDescript != null">  AND group_descript like concat('%','#{groupDescript}', '%') </if>
+         <if test="managerName != null">  AND manager_name like '%#{managerName}%' </if>
+         <choose>
+            <when test="useYn == null"> AND use_yn = 'Y'</when>
+            <when test="useYn != null"> AND use_yn = #{useYn}</when>
+         </choose>
+         <if test="technician != null">  AND group_id IN ( SELECT DISTINCT(GROUP_ID) FROM ptm_booth_info WHERE use_yn = 'Y' AND technician = #{technician} )  </if>
+    </select>
+    
+    <select id="getNewBoothGroupId" resultType="java.lang.Integer">
+     /* QUERY ID : getNewBoothGroupId */
+        SELECT (coalesce(max(group_id), 0) + 1) FROM ptm_booth_group;
+    </select>
+    
+    <insert id="insertBoothGroupInfo" parameterType="java.util.Map">
+     /* QUERY ID : insertBoothGroupInfo */
+        INSERT INTO ptm_booth_group(
+                        group_id,
+                        group_name,
+                        group_descript,
+                        manager_name,
+                        manager_tel,
+                        manager_mobile,
+                        manager_email,
+                        contract_condition,
+                        group_comment,
+                        attach_file)
+        VALUES (#{groupId},
+                #{groupName},
+                #{groupDescript},
+                #{managerName},
+                #{managerTel},
+                #{managerMobile},
+                #{managerEmail},
+                #{contractCondition},
+                #{groupComment},
+                #{attachFile}      );
+    </insert>    
+       
+   <update id="updateBoothGroupInfo" parameterType="java.util.Map">
+   /* QUERY ID : updateBoothGroupInfo */
+        UPDATE ptm_booth_group SET
+               <if test="groupName != null"> group_name             = #{groupName},</if>        
+               <if test="groupDescript != null"> group_descript     = #{groupDescript},</if>    
+               <if test="managerName != null"> manager_name         = #{managerName},</if>      
+               <if test="managerTel != null"> manager_tel           = #{managerTel},</if>       
+               <if test="managerMobile != null"> manager_mobile     = #{managerMobile},</if>    
+               <if test="managerEmail != null"> manager_email       = #{managerEmail},</if>     
+               <if test="contractCondition != null"> contract_condition = #{contractCondition},</if>
+               <if test="groupComment != null"> group_comment       = #{groupComment},</if>     
+               <if test="attachFile != null"> attach_file           = #{attachFile},</if>
+               <if test="useYn != null"> use_yn                     = #{useYn},</if>
+               update_dt   = CURRENT_TIMESTAMP        
+         WHERE group_id = #{groupId} 
+    </update>
+
+    <delete id="deleteBoothGroupInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteBoothGroupInfo */
+        DELETE FROM ptm_booth_group WHERE group_id = #{groupId}
+    </delete>
+    
+    <delete id="setGroupUseYN" parameterType="java.util.Map">
+    /* QUERY ID : setGroupUseYN */
+        UPDATE ptm_booth_group SET use_yn = #{useYn}  WHERE group_id = #{groupId}
+    </delete>
+
+    <select id="getBoothInfo" parameterType="java.util.Map" resultType="boothDto">
+    /* QUERY ID : getBoothInfo */
+        SELECT a.booth_id               boothId           
+                       ,a.booth_name             boothName
+                       ,a.technician             technician
+                       ,i.first_name             technicianName
+                       ,a.status                 status             
+                       ,f.code_name              statusName
+                       ,a.loc_detail             locDetail         
+                       ,a.loc_street_no          locStreetNo      
+                       ,a.loc_suburb             locSuburb         
+                       ,a.loc_state              locState          
+                       ,a.loc_postcd             locPostcd         
+                       ,a.group_id               groupId           
+                       ,h.group_name             groupName
+                       ,a.manager                manager            
+                       ,j.first_name             managerName            
+                       ,a.serial_no              serialNo          
+                       ,a.printer_model          printerModel      
+                       ,d.code_name              printerModelName
+                       ,a.capture_type           captureType       
+                       ,c.code_name              captureTypeName       
+                       ,a.pad_lock               padLock           
+                       ,a.inside_lock            insideLock        
+                       ,a.tag_due_dt             tagDueDt         
+                       ,a.quality_test_result    qualityTestResult
+                       ,g.code_name              qualityTestResultName
+                       ,a.quality_test_dt        qualityTestDt    
+                       ,a.pay_onsite             payOnsite
+                       ,a.rent_fee_type          rentFeeType
+                       ,k.code_name              rentFeeTypeName
+                       ,a.type                   type
+                       ,b.code_name              typeName
+                       ,a.booth_comment          boothComment      
+                       ,a.monitor_type           monitorType       
+                       ,e.code_name              monitorTypeName       
+                       ,a.update_dt              updateDt
+                       ,a.use_yn                 useYn          
+                  FROM ptm_booth_info a 
+                        left outer join (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'BOOTH_TYPE') b ON a.type = b.code_value
+                        left outer join (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'CAPTURE_TYPE') c ON a.capture_type = c.code_value
+                        left outer join (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'PRINTER_MODEL') d ON a.printer_model = d.code_value
+                        left outer join (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'MONITOR_TYPE') e ON a.monitor_type = e.code_value
+                        left outer join (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'BOOTH_STATUS') f ON a.status = f.code_value
+                        left outer join (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'QLTY_TST_RSLT') g ON a.quality_test_result = g.code_value
+                        left outer join ptm_booth_group h ON a.group_id = h.group_id
+                        left outer join frwk_cmm_userinfo i ON a.technician = i.user_id
+                        left outer join frwk_cmm_userinfo j ON a.manager = j.user_id
+                        left outer join (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'RENT_PAY_TYPE') k ON a.rent_fee_type = k.code_value
+         WHERE  booth_id = #{boothId}     
+    </select> 
+
+    <select id="getBoothInfoList" parameterType="java.util.Map" resultType="boothDto">
+    /* QUERY ID : getBoothInfoList */
+  SELECT a.booth_id               boothId
+               ,b.group_name             groupName
+               ,a.booth_name             boothName
+               ,d.user_id                technician         
+               ,d.first_name             technicianName         
+               ,a.status                 status
+               ,c.code_name              statusName
+               ,a.loc_detail             locDetail         
+               ,a.loc_street_no          locStreetNo      
+               ,a.loc_suburb             locSuburb         
+               ,a.loc_state              locState          
+               ,a.loc_postcd             locPostcd         
+               ,a.group_id               groupId           
+               ,a.manager                manager            
+               ,a.serial_no              serialNo          
+               ,a.printer_model          printerModel      
+               ,a.capture_type           captureType       
+               ,a.pad_lock               padLock           
+               ,a.inside_lock            insideLock        
+               ,a.tag_due_dt             tagDueDt         
+               ,a.quality_test_result    qualityTestResult
+               ,e.code_name              qualityTestResultName
+               ,a.quality_test_dt        qualityTestDt    
+               ,a.rent_fee_type          rentFeeType
+               ,f.code_name              rentFeeTypeName
+               ,a.pay_onsite             payOnsite            
+               ,a.type                   type               
+               ,a.booth_comment          boothComment      
+               ,a.monitor_type           monitorType       
+               ,a.update_dt              updateDt
+               ,a.use_yn                 useYn          
+          FROM ptm_booth_info a
+               LEFT OUTER JOIN (SELECT group_id, group_name, use_yn FROM ptm_booth_group ) b ON a.group_id = b.group_id
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'BOOTH_STATUS') c ON a.status = c.code_value
+               LEFT OUTER JOIN (SELECT user_id, first_name FROM frwk_cmm_userinfo ) d ON a.technician = d.user_id
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'QLTY_TST_RSLT') e ON a.quality_test_result = e.code_value
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'RENT_PAY_TYPE') f ON a.rent_fee_type = f.code_value
+         WHERE a.group_id = b.group_id
+           AND 1 = 1
+         <if test="boothName != null">  AND a.booth_name like concat('%',#{boothName}, '%') </if>
+         <if test="status != null">  AND a.status = #{status} </if>
+         <if test="boothId != null">  AND a.booth_id = #{boothId} </if>
+         <if test="locState != null">  AND a.loc_state = #{locState} </if>
+         <if test="groupId != null">  AND a.group_id = #{groupId} </if>
+         <if test="serialNo != null">  AND a.serial_no  like concat('%', #{serialNo}, '%') </if>
+         <if test="printerModel != null">  AND a.printer_model = #{printerModel} </if>
+         <if test="captureType != null">  AND a.capture_type = #{captureType} </if>
+         <if test="tagDueDt != null">  AND a.tag_due_dt = #{tagDueDt} </if>
+         <if test="qualityTestResult != null">  AND a.quality_test_result = #{qualityTestResult} </if>
+         <if test="type != null">  AND a.type = #{type} </if>
+         <if test="boothComment != null">  AND a.booth_comment like concat('%',#{boothComment}, '%') </if>
+         <if test="monitorType != null">  AND a.monitor_type = #{monitorType} </if>
+         <if test="rentFeeType != null">  AND a.pay_onsite = #{rentFeeType} </if>
+         <if test="payOnsite != null">  AND a.pay_onsite = #{payOnsite} </if>
+         <choose>
+            <when test="useYn == null"> AND a.use_yn = 'Y'</when>
+            <when test="useYn != null"> AND a.use_yn = #{useYn}</when>
+         </choose>
+         <if test="technician != null">  AND a.technician = #{technician}   </if>
+         <if test="technicianName != null">  AND d.first_name like concat('%',#{technicianName}, '%') </if>
+         
+    </select> 
+    
+    <select id="getBoothInfoListByGroupId" parameterType="java.util.Map" resultType="boothDto">
+    /* QUERY ID : getBoothInfoListByGroupId */
+        SELECT booth_id               boothId           
+               ,booth_name             boothName         
+               ,technician             technician         
+               ,status                 status             
+               ,loc_detail             locDetail         
+               ,loc_street_no          locStreetNo      
+               ,loc_suburb             locSuburb         
+               ,loc_state              locState          
+               ,loc_postcd             locPostcd         
+               ,group_id               groupId           
+               ,manager                manager            
+               ,serial_no              serialNo          
+               ,printer_model          printerModel      
+               ,capture_type           captureType       
+               ,pad_lock               padLock           
+               ,inside_lock            insideLock        
+               ,tag_due_dt             tagDueDt         
+               ,quality_test_result    qualityTestResult
+               ,quality_test_dt        qualityTestDt    
+               ,rent_fee_type          rentFeeType
+               ,pay_onsite             payOnsite           
+               ,type                   type               
+               ,booth_comment          boothComment      
+               ,monitor_type           monitorType       
+               ,update_dt              updateDt
+               ,use_yn                 useYn          
+          FROM ptm_booth_info
+         WHERE group_id = #{groupId}
+    </select> 
+
+    <select id="getNewBoothId" resultType="java.lang.Integer">
+     /* QUERY ID : getNewBoothId */
+        SELECT (coalesce(max(booth_id), 0) + 1) FROM ptm_booth_info;
+    </select>
+
+    <insert id="insertBoothInfo" parameterType="java.util.Map">
+     /* QUERY ID : insertBoothInfo */
+        INSERT INTO ptm_booth_info(booth_id,
+                     booth_name,
+                     technician,
+                     status,
+                     loc_detail,
+                     loc_street_no,
+                     loc_suburb,
+                     loc_state,
+                     loc_postcd,
+                     group_id,
+                     manager,
+                     serial_no,
+                     printer_model,
+                     capture_type,
+                     pad_lock,
+                     inside_lock,
+                     tag_due_dt,
+                     quality_test_result,
+                     quality_test_dt,
+                     rent_fee_type,
+                     pay_onsite,
+                     type,
+                     booth_comment,
+                     monitor_type)
+        VALUES (#{boothId},
+                #{boothName},
+                #{technician},
+                #{status},
+                #{locDetail},
+                #{locStreetNo},
+                #{locSuburb},
+                #{locState},
+                #{locPostcd},
+                #{groupId},
+                #{manager},
+                #{serialNo},
+                #{printerModel},
+                #{captureType},
+                #{padLock},
+                #{insideLock},
+                #{tagDueDt},
+                #{qualityTestResult},
+                #{qualityTestDt},
+                #{rentFeeType},
+                #{payOnsite},
+                #{type},
+                #{boothComment},
+                #{monitorType})
+    </insert>
+
+
+   <update id="updateBoothInfo" parameterType="java.util.Map">
+   /* QUERY ID : updateBoothInfo */
+        UPDATE ptm_booth_info SET
+               <if test="boothName         != null"> booth_name          = #{boothName},</if>                          
+               <if test="technician        != null"> technician          = #{technician},</if>         
+               <if test="status            != null"> status              = #{status},</if>             
+               <if test="locDetail         != null"> loc_detail          = #{locDetail},</if>         
+               <if test="locStreetNo       != null"> loc_street_no       = #{locStreetNo},</if>      
+               <if test="locSuburb         != null"> loc_suburb          = #{locSuburb},</if>         
+               <if test="locState          != null"> loc_state           = #{locState},</if>          
+               <if test="locPostcd         != null"> loc_postcd          = #{locPostcd},</if>         
+               <if test="groupId           != null"> group_id            = #{groupId},</if>           
+               <if test="manager           != null"> manager             = #{manager},</if>            
+               <if test="serialNo          != null"> serial_no           = #{serialNo},</if>          
+               <if test="printerModel      != null"> printer_model       = #{printerModel},</if>      
+               <if test="captureType       != null"> capture_type        = #{captureType},</if>       
+               <if test="padLock           != null"> pad_lock            = #{padLock},</if>           
+               <if test="insideLock        != null"> inside_lock         = #{insideLock},</if>        
+               <if test="tagDueDt          != null"> tag_due_dt          = #{tagDueDt},</if>         
+               <if test="qualityTestResult != null"> quality_test_result = #{qualityTestResult},</if>
+               <if test="qualityTestDt     != null"> quality_test_dt     = #{qualityTestDt},</if>    
+               <if test="rentFeeType       != null"> rent_fee_type       = #{rentFeeType},</if>           
+               <if test="payOnsite         != null"> pay_onsite          = #{payOnsite},</if>           
+               <if test="type              != null"> type                = #{type},</if>               
+               <if test="boothComment      != null"> booth_comment       = #{boothComment},</if>      
+               <if test="monitorType       != null"> monitor_type        = #{monitorType},</if>       
+               <if test="useYn             != null"> use_yn              = #{useYn},</if>       
+               update_dt   = CURRENT_TIMESTAMP
+         WHERE booth_id = #{boothId} 
+    </update>
+
+   <update id="updateBoothStatus" parameterType="java.util.Map">
+   /* QUERY ID : updateBoothStatus */
+        UPDATE ptm_booth_info SET status = #{status} WHERE booth_id = #{boothId} 
+    </update>
+    
+    <delete id="deleteBoothInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteBoothInfo */
+        DELETE FROM ptm_booth_info WHERE booth_id = #{boothId}
+    </delete>
+    
+     <delete id="setBoothUseYN" parameterType="java.util.Map">
+    /* QUERY ID : setGroupUseYN */
+        UPDATE ptm_booth_info SET use_yn = #{useYn}  WHERE booth_id = #{boothId}
+    </delete>   
+
+    <select id="getBankAcctInfo" parameterType="java.util.Map" resultType="bankAcctInfoDto">
+    /* QUERY ID : getBankAcctInfo */
+        SELECT a.acct_id acctId,
+               a.acct_name acctName,
+               a.bank_name bankName,
+               b.code_name bankNameName,
+               a.bank_bsb bankBsb,
+               a.bank_acct_no bankAcctNo,
+               a.bank_acct_holder_name bankAcctHolderName,
+               a.update_dt updateDt
+          FROM ptm_bank_acctinfo a
+               LEFT OUTER JOIN
+                  (SELECT code_value, code_name
+                     FROM frwk_cmm_code
+                    WHERE system_cd = 'PHOTOME' AND category_cd = 'ACCOUNT_BANK') b
+               ON a.bank_name = b.code_value
+         WHERE a.acct_id = #{acctId}
+    </select>
+    
+    <select id="getBankAcctList" parameterType="java.util.Map" resultType="bankAcctInfoDto">
+    /* QUERY ID : getBankAcctList */
+        SELECT a.acct_id acctId,
+               a.acct_name acctName,
+               a.bank_name bankName,
+               b.code_name bankNameName,
+               a.bank_bsb bankBsb,
+               a.bank_acct_no bankAcctNo,
+               a.bank_acct_holder_name bankAcctHolderName,
+               a.update_dt updateDt,
+               a.use_yn useYn
+          FROM ptm_bank_acctinfo a
+               LEFT OUTER JOIN
+                  (SELECT code_value, code_name
+                     FROM frwk_cmm_code
+                    WHERE system_cd = 'PHOTOME' AND category_cd = 'ACCOUNT_BANK') b
+               ON a.bank_name = b.code_value
+         WHERE 1 = 1
+         <if test="acctName != null">  AND acct_name like concat('%',#{acctName}, '%') </if>
+         <if test="bankName != null">  AND bank_name like concat('%',#{bankName}, '%') </if>
+         <if test="bankBsb != null">  AND bank_bsb like concat('%',#{bankBsb}, '%') </if>
+         <if test="bankAcctNo != null">  AND bank_acct_no like concat('%',#{bankAcctNo}, '%') </if>
+         <if test="bankAcctHolderName != null">  AND bank_acct_holder_name like concat('%',#{bankAcctHolderName}, '%') </if>
+         <choose>
+            <when test="useYn == null"> AND use_yn = 'Y'</when>
+            <when test="useYn != null"> AND use_yn = #{useYn}</when>
+         </choose>
+    </select>
+        
+   <update id="modifyBankAcctInfo" parameterType="java.util.Map">
+   /* QUERY ID : modifyBankAcctInfo */
+        UPDATE ptm_bank_acctinfo SET
+               <if test="acctName    != null"> acct_name    = #{acctName},</if>                          
+               <if test="bankName    != null"> bank_name    = #{bankName},</if>         
+               <if test="bankBsb     != null"> bank_bsb     = #{bankBsb},</if>             
+               <if test="bankAcctNo  != null"> bank_acct_no = #{bankAcctNo},</if>         
+               <if test="bankAcctHolderName  != null"> bank_acct_holder_name  = #{bankAcctHolderName},</if>      
+               <if test="useYn  != null"> use_yn  = #{useYn},</if>      
+               update_dt   = CURRENT_TIMESTAMP
+         WHERE acct_id = #{acctId} 
+    </update>
+
+    <insert id="registBankAcctInfo" parameterType="java.util.Map">
+     /* QUERY ID : registBankAcctInfo */
+        INSERT INTO ptm_bank_acctinfo (
+                     acct_id,
+                     acct_name,
+                     bank_name,
+                     bank_bsb,
+                     bank_acct_no,
+                     bank_acct_holder_name)
+        VALUES (#{acctId},
+                #{acctName},
+                #{bankName},
+                #{bankBsb},
+                #{bankAcctNo},
+                #{bankAcctHolderName})
+    </insert>   
+     
+    <delete id="deleteBankAcctInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteBankAcctInfo */
+        DELETE FROM ptm_bank_acctinfo WHERE acct_id = #{acctId}
+    </delete>
+    
+    <select id="getNewBankAcctId" resultType="java.lang.Integer">
+     /* QUERY ID : getNewBankAcctId */
+        SELECT (coalesce(max(acct_id), 0) + 1) FROM ptm_bank_acctinfo;
+    </select>
+    
+    <delete id="setBankAcctYN" parameterType="java.util.Map">
+    /* QUERY ID : setBankAcctYN */
+        UPDATE ptm_bank_acctinfo SET use_yn = #{useYn}  WHERE acct_id = #{acctId}
+    </delete>         
+        
+    
+    <select id="getRentFeeList" parameterType="java.util.Map" resultType="boothRentFeeDto">
+    /* QUERY ID : getRentFeeList */
+        SELECT a.booth_id boothId,
+               b.booth_name boothName,
+               c.group_id groupId,
+               c.group_name groupName,
+               a.rent_year rentYear,
+               a.rent_month rentMonth,
+               a.rent_type rentType,
+               d.code_name rentTypeName,
+               a.rent_amount rentAmount,
+               a.pay_onsite payOnsite,
+               a.modify_dt modifyDt,
+               a.create_dt createDt
+          FROM ptm_rent_fee a
+               LEFT OUTER JOIN (SELECT booth_id, booth_name, use_yn FROM ptm_booth_info ) b ON b.booth_id = a.booth_id
+               LEFT OUTER JOIN (SELECT group_id, group_name, use_yn FROM ptm_booth_group ) c ON c.group_id = b.group_id
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'RENT_PAY_TYPE') d ON d.code_value = a.rent_type
+         WHERE b.use_yn = 'Y'
+               <if test="groupId != null">  AND c.group_id =  ${groupId} </if>
+               <if test="boothId != null">  AND a.booth_id =  ${boothId} </if>
+               <if test="rentYear != null">  AND a.rent_year =  ${rentYear} </if>
+               <if test="rentMonth != null">  AND a.rent_month =  ${rentMonth} </if>
+               <if test="rentType != null">  AND a.rent_type =  ${rentType} </if>
+               <if test="payOnsite != null">  AND a.pay_onsite =  ${payOnsite} </if>
+    </select>    
+    
+    <select id="getRentFeeInfo" parameterType="java.util.Map" resultType="boothRentFeeDto">
+    /* QUERY ID : getRentFeeInfo */
+        SELECT a.booth_id boothId,
+               b.booth_name boothName,
+               c.group_id groupId,
+               c.group_name groupName,
+               a.rent_year rentYear,
+               a.rent_month rentMonth,
+               a.rent_type rentType,
+               d.code_name rentTypeName,
+               a.rent_amount rentAmount,
+               a.pay_onsite payOnsite,
+               a.modify_dt modifyDt,
+               a.create_dt createDt
+          FROM ptm_rent_fee a
+               LEFT OUTER JOIN (SELECT booth_id, booth_name, use_yn FROM ptm_booth_info ) b ON b.booth_id = a.booth_id
+               LEFT OUTER JOIN (SELECT group_id, group_name, use_yn FROM ptm_booth_group ) c ON c.group_id = b.group_id
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'RENT_PAY_TYPE') d ON d.code_value = a.rent_type
+         WHERE a.booth_id =  ${boothId} AND a.rent_year =  ${rentYear} AND a.rent_month =  ${rentMonth}
+    </select>    
+    
+    
+    <insert id="registRentFeeInfo" parameterType="java.util.Map">
+     /* QUERY ID : registRentFeeInfo */
+        INSERT INTO ptm_rent_fee(booth_id,
+                         rent_year,
+                         rent_month,
+                         rent_type,
+                         rent_amount,
+                         pay_onsite)
+        VALUES (#{boothId},
+                #{rentYear},
+                #{rentMonth},
+                #{rentType},
+                #{rentAmount},
+                #{payOnsite})  
+    </insert>   
+        
+   <update id="modifyRentFeeInfo" parameterType="java.util.Map">
+   /* QUERY ID : modifyRentFeeInfo */
+        UPDATE ptm_rent_fee SET
+               <if test="rentType   != null"> rent_type    = #{rentType},</if>                          
+               <if test="rentAmount != null"> rent_amount  = #{rentAmount},</if>         
+               <if test="payOnsite  != null"> pay_onsite   = #{payOnsite},</if>             
+               modify_dt  = CURRENT_TIMESTAMP
+         WHERE booth_id = ${boothId} AND rent_year = ${rentYear} AND rent_month = ${rentMonth}
+    </update>   
+
+    <delete id="deleteRentFeeInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteRentFeeInfo */
+        DELETE FROM ptm_rent_fee WHERE booth_id =  ${boothId} AND rent_year =  ${rentYear} AND rent_month =  ${rentMonth}
+    </delete>
+
+     <select id="getTechnicianList" parameterType="java.util.Map" resultType="userDto">
+    /* QUERY ID : getTechnicianList */
+        SELECT user_id         userId,          
+                  passwd          passwd,          
+                  pwdfail_cnt     pwdfailCnt,      
+                  first_name      firstName,       
+                  middle_name     middleName,      
+                  last_name       lastName,        
+                  addr_street     addrStreet,      
+                  addr_suburb     addrSuburb,      
+                  addr_state      addrState,       
+                  addr_zipcd      addrZipcd,       
+                  mobile_phone    mobilePhone,     
+                  telephone       telephone,       
+                  email           email,           
+                  sex             sex,             
+                  birth_dt        birthDt,         
+                  ext_col1        extCol1,         
+                  ext_col2        extCol2,         
+                  ext_col3        extCol3,         
+                  ext_col4        extCol4,         
+                  ext_col5        extCol5,         
+                  use_yn          useYn,           
+                  create_dt       createDt,        
+                  modify_dt       modifyDt,        
+                  login_dt        loginDt,         
+                  picture_file    pictureFile,     
+                  user_type       userType
+              FROM frwk_cmm_userinfo
+             WHERE user_id IN (SELECT DISTINCT technician
+                                 FROM ptm_booth_info
+                                WHERE technician IS NOT NULL)
+                  <if test="firstName != null">  AND first_name like concat('%','#{firstName}', '%') </if> 
+                  <if test="userId   != null"> user_id    = #{userId},</if> 
+    </select>    
+</mapper>

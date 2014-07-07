@@ -1,0 +1,290 @@
+
+@CHARSET "UTF-8";
+
+
+/* Grid TABLE Panel */
+.grid_table_panel {
+    clear: both;
+    width: 98%;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-top: 1px solid #b6bfc8;
+    border-bottom: 4px solid #99bbe8;
+}
+.grid_panel {
+    clear: both;
+    width: 98%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+/* Grid TABLE */
+.grid_table {
+    font-size: 12px;
+    width: 100%;
+    color: #525252;
+}
+.grid_table TD {
+    height: 25px;
+}
+.grid_table TH {
+    height: 24px;
+    font-weight: bold;
+}
+/* Grid TABLE > Header, Body, Footer
+ * @usage :
+ *      <TABLE>
+ *      
+ *      <THEAD>
+ *          <TR> <TH>Weekday</TH> <TH>Date</TH> <TH>Manager</TH> <TH>Qty</TH> </TR>
+ *      </THEAD>
+ *      
+ *      <TBODY>
+ *          <TR> <TD>Mon</TD> <TD>09/11</TD> <TD>Kelsey</TD>  <TD>639</TD>  </TR>
+ *          <TR> <TD>Tue</TD> <TD>09/12</TD> <TD>Lindsey</TD> <TD>596</TD>  </TR>
+ *          <TR> <TD>Wed</TD> <TD>09/13</TD> <TD>Randy</TD>   <TD>1135</TD> </TR>
+ *          <TR> <TD>Thu</TD> <TD>09/14</TD> <TD>Susan</TD>   <TD>1002</TD> </TR>
+ *          <TR> <TD>Fri</TD> <TD>09/15</TD> <TD>Randy</TD>   <TD>908</TD>  </TR>
+ *          <TR> <TD>Sat</TD> <TD>09/16</TD> <TD>Lindsey</TD> <TD>371</TD>  </TR>
+ *          <TR> <TD>Sun</TD> <TD>09/17</TD> <TD>Susan</TD>   <TD>272</TD>  </TR>
+ *      </TBODY>
+ *      
+ *      <TFOOT>
+ *          <TR> <TH ALIGN=LEFT COLSPAN=3>Total</TH> <TH>4923</TH> </TR>
+ *      </TFOOT>
+ *      
+ *      </TABLE>
+ */
+.grid_table THEAD TH {
+    text-align: left;
+    color: #00274F;
+    background-image: url( '/photome/resources/images/common/table/table_title_bar.gif' );
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    text-indent: 5px;
+}
+/* last column */
+.grid_table THEAD TH.last {
+    background-image: url( '/photome/resources/images/common/table/table_title_bg.gif' );
+    background-repeat: repeat-x;
+    background-position: bottom;
+}
+.grid_table TBODY TD {
+    word-break: break-all;
+    border-bottom: 1px solid #ededed;
+    color: #383838;
+    padding: 0 5px;
+}
+.grid_table TBODY TD.key {
+    color: #696934;
+    font-weight: bold;
+}
+.grid_table TBODY TR.out TD {
+    background-image: url( '/photome/resources/images/common/table/table_bar.gif' );
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+/* last column */
+.grid_table TBODY TR.out TD.last {
+    background-image: none;
+}
+.grid_table TBODY TR.over {
+    background-image: url( '/photome/resources/images/common/table/table_over_bg.gif' );
+}
+.grid_table TBODY TR.over TD {
+    background-image: '';
+}
+
+.grid_table TFOOT {}
+
+/* Grid TABLE Paging Panel */
+.paging {
+    width: 100%;
+    height: 25px;
+    text-align: center;
+    font-size: 1.1em;
+    padding-top: 1em;
+}
+
+/* 상세 테이블의 기본 폰트와 테이블모양 구성 */
+DIV.detail_panel {
+    width: 98%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+/* 상세 테이블의 기본 폰트와 테이블모양 구성 */
+DIV.detail_panel TABLE.detail_table {
+    border-top: 3px solid #0052A4;
+    border-bottom: 2px solid #0074E8;
+    border-collapse: collapse;
+    width: 100%;
+    height: 28px;    
+    font-size: 12px;
+}
+
+DIV.detail_panel TABLE.detail_table TD {
+    word-break: break-all;
+    font-size: 12px;
+    height: 27px;
+    border-bottom: 1px solid #A598A5;
+}
+
+
+DIV.detail_panel TABLE.detail_table .label{
+    background-color: #f2f6fa;
+    padding-right: 10;
+    font-weight: bold;
+    text-align: right;
+    color: #2b57ad;
+}
+
+DIV.detail_panel TABLE.detail_table .value {
+    text-align: left;
+    color: #142950;
+    text-indent: 5px;
+}
+
+DIV.detail_panel TABLE.detail_table THEAD TD {
+    background-color: #E1E1E1;
+    text-align: center;
+    font-weight: bold;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: #004242;
+}
+
+
+DIV.detail_panel TABLE.detail_table TD {
+    word-break: break-all;
+    font-size: 12px;
+    height: 27px;
+    border-bottom: 1px solid #D7D2D7;
+}
+
+DIV.detail_panel TABLE.detail_table THEAD TD.value {
+    padding-left: 4px;
+    color: #525252;
+}
+DIV.detail_panel TABLE.detail_table TBODY TD.content {
+    padding: 10px;
+    text-align: justify;
+    line-height:20pt;
+    color: #525252;
+}
+DIV.detail_panel TABLE.detail_table THEAD TR {
+    height: 27px;
+}
+DIV.detail_panel TABLE.detail_table THEAD TR.title TD.value {
+    border-left: 1px solid #FFFFFF;
+    font-weight: bold;
+}
+
+
+/* 상세 테이블의 엘리먼트 */
+/* Detail Item TABLE */
+DIV.detail_panel TABLE.detail_table SELECT {
+    border: 1px solid #9ec8ff;
+    font-size: 11px;
+    height: 18px;
+}
+TABLE.detail_table .value INPUT[type="text"], .detail_table .value INPUT[type="password"] {}
+TABLE.detail_table .value INPUT[type="checkbox"], .detail_table .value INPUT[type=radio] { border: none; }
+TABLE.detail_table .value INPUT.radio, .detail_table .value INPUT.checkbox { border : none; }
+TABLE.detail_table .value TEXTAREA {
+    width: 100%;
+    height: 3em;
+}
+TABLE.detail_table .value BUTTON {
+    border: none;
+    font-size: 12px;
+    padding-top: 2px;
+    margin-left: 3px;
+    margin-right: 3px;
+    color:#264390;
+    background-repeat:no-repeat;
+    background-color:transparent;
+    cursor: hand;
+}
+
+
+/* Grid와  Detail 테이블의 버튼 설정 */
+TABLE.grid_table BUTTON,
+TABLE.detail_table .value BUTTON {
+    height: 18px;
+    letter-spacing: -1px;
+    padding-top: 3px;
+    padding-left: 0;
+    text-align: center;
+    color: #545454;
+    font-size: 11px;
+    margin-bottom: 1px;
+}
+
+TABLE.grid_table BUTTON.save,
+TABLE.grid_table BUTTON.close,
+TABLE.grid_table BUTTON.search,
+TABLE.grid_table BUTTON.insert,
+TABLE.grid_table BUTTON.update,
+TABLE.grid_table BUTTON.delete,
+TABLE.grid_table BUTTON.list,
+TABLE.grid_table BUTTON.cancel,
+TABLE.detail_table .value BUTTON.save,
+TABLE.detail_table .value BUTTON.close,
+TABLE.detail_table .value BUTTON.search,
+TABLE.detail_table .value BUTTON.insert,
+TABLE.detail_table .value BUTTON.update,
+TABLE.detail_table .value BUTTON.delete,
+TABLE.detail_table .value BUTTON.list,
+TABLE.detail_table .value BUTTON.cancel,
+TABLE.grid_table BUTTON.word2,
+TABLE.detail_table .value BUTTON.word2 {
+    background-image: url('/photome/resources/images/button/small_word2.gif'); width: 33px;
+}
+TABLE.grid_table BUTTON.word3,
+TABLE.detail_table .value BUTTON.word3 {
+    background-image: url('/photome/resources/images/button/small_word3.gif'); width: 44px;
+}
+TABLE.grid_table BUTTON.file,
+TABLE.detail_table .value BUTTON.file,
+TABLE.grid_table BUTTON.word4,
+TABLE.detail_table .value BUTTON.word4 {
+    background-image: url('/photome/resources/images/button/small_word4.gif'); width: 54px;
+}
+TABLE.grid_table BUTTON.word5,
+TABLE.detail_table .value BUTTON.word5 {
+    background-image: url('/photome/resources/images/button/small_word5.gif'); width: 64px;
+}
+TABLE.grid_table BUTTON.excel_import,
+TABLE.detail_table .value BUTTON.excel_import,
+TABLE.grid_table BUTTON.excel_export,
+TABLE.detail_table .value BUTTON.excel_export,
+TABLE.grid_table BUTTON.word6,
+TABLE.detail_table .value BUTTON.word6 {
+    background-image: url('/photome/resources/images/button/small_word6.gif'); width: 75px;
+}
+TABLE.grid_table BUTTON.word7,
+TABLE.detail_table .value BUTTON.word7 {
+    background-image: url('/photome/resources/images/button/small_word7.gif'); width: 86px;
+}
+TABLE.grid_table BUTTON.word8,
+TABLE.detail_table .value BUTTON.word8 {
+    background-image: url('/photome/resources/images/button/small_word8.gif'); width: 97px;
+}
+TABLE.grid_table BUTTON.word9,
+TABLE.detail_table .value BUTTON.word9 {
+    background-image: url('/photome/resources/images/button/small_word9.gif'); width: 108px;
+}
+TABLE.grid_table BUTTON.word10,
+TABLE.detail_table .value BUTTON.word10 {
+    background-image: url('/photome/resources/images/button/small_word10.gif'); width: 119px;
+}
+TABLE.grid_table BUTTON.word11,
+TABLE.detail_table .value BUTTON.word11 {
+    background-image: url('/photome/resources/images/button/small_word11.gif'); width: 108px;
+}
+TABLE.grid_table BUTTON.word12,
+TABLE.detail_table .value BUTTON.word12 {
+    background-image: url(/photome/resources/images/button/small_word12.gif'); width: 119px;
+}
+

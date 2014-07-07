@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlBoothRentFeeDao">
+
+    <select id="getCurrBoothRentFee" parameterType="java.util.Map" resultType="java.lang.String">
+    /* QUERY ID : getCurrBoothRentFee */
+          SELECT 
+                <choose>
+                    <when test="rentFeeType == 'FIXED_MONEY'"> rent_amount rentAmount </when>
+                    <otherwise> rent_percent rentPercent </otherwise>
+                </choose>
+          FROM ptm_rent_fee
+         WHERE rent_year = DATE_FORMAT(CURRENT_DATE,'%Y')
+           AND rent_month = DATE_FORMAT(CURRENT_DATE,'%m')
+           AND booth_id = #{boothId}    
+    </select>
+    
+    <select id="getRentFeeList" parameterType="java.util.Map" resultType="boothRentFeeDto">
+    /* QUERY ID : getRentFeeList */
+        SELECT a.booth_id boothId,
+               b.booth_name boothName,
+               b.rent_fee_type rentFeeType,
+               d.code_name rentFeeTypeName,
+               b.pay_onsite payOnsite,
+               c.group_id groupId,
+               c.group_name groupName,
+               a.rent_year rentYear,
+               a.rent_month rentMonth,
+               a.rent_amount rentAmount,
+               a.rent_percent rentPercent,
+               a.modify_dt modifyDt,
+               a.create_dt createDt
+          FROM ptm_rent_fee a
+               LEFT OUTER JOIN (SELECT group_id, booth_id, booth_name, rent_fee_type, pay_onsite, use_yn FROM ptm_booth_info ) b ON b.booth_id = a.booth_id
+               LEFT OUTER JOIN (SELECT group_id, group_name, use_yn FROM ptm_booth_group ) c ON c.group_id = b.group_id
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'RENT_PAY_TYPE' ) d ON d.code_value = b.rent_fee_type
+         WHERE b.use_yn = 'Y'
+               <if test="groupId != null">  AND c.group_id =  #{groupId} </if>
+               <if test="boothId != null">  AND a.booth_id =  #{boothId} </if>
+               <if test="rentYear != null">  AND a.rent_year =  #{rentYear} </if>
+               <if test="rentMonth != null">  AND a.rent_month =  #{rentMonth} </if>
+               <if test="rentFeeType != null">  AND b.rent_fee_type =  #{rentFeeType} </if>
+               <if test="payOnsite != null">  AND b.pay_onsite =  #{payOnsite} </if>
+    </select>    
+ 
+    <select id="getRentFeeInfo" parameterType="java.util.Map" resultType="boothRentFeeDto">
+    /* QUERY ID : getRentFeeInfo */
+        SELECT a.booth_id boothId,
+               b.booth_name boothName,
+               b.rent_fee_type rentFeeType,
+               d.code_name rentFeeTypeName,
+               b.pay_onsite payOnsite,
+               c.group_id groupId,
+               c.group_name groupName,
+               a.rent_year rentYear,
+               a.rent_month rentMonth,
+               a.rent_amount rentAmount,
+               a.rent_percent rentPercent,
+               a.modify_dt modifyDt,
+               a.create_dt createDt
+          FROM ptm_rent_fee a
+               LEFT OUTER JOIN (SELECT group_id, booth_id, booth_name, rent_fee_type, pay_onsite, use_yn FROM ptm_booth_info ) b ON b.booth_id = a.booth_id
+               LEFT OUTER JOIN (SELECT group_id, group_name, use_yn FROM ptm_booth_group ) c ON c.group_id = b.group_id
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'RENT_PAY_TYPE' ) d ON d.code_value = b.rent_fee_type
+         WHERE a.booth_id =  #{boothId} AND a.rent_year =  #{rentYear} AND a.rent_month =  #{rentMonth}
+    </select>    
+    
+    <insert id="registRentFeeInfo" parameterType="java.util.Map">
+     /* QUERY ID : registRentFeeInfo */
+        INSERT INTO ptm_rent_fee(booth_id,
+                         rent_year,
+                         rent_month,
+                         rent_percent,
+                         rent_amount)
+        VALUES (#{boothId},
+                #{rentYear},
+                #{rentMonth},
+                #{rentPercent},
+                #{rentAmount})  
+    </insert>   
+    
+   <update id="modifyRentFeeInfo" parameterType="java.util.Map">
+   /* QUERY ID : modifyRentFeeInfo */
+        UPDATE ptm_rent_fee SET
+               <if test="rentAmount != null"> rent_amount  = #{rentAmount},</if>         
+               <if test="rentPercent != null"> rent_percent  = #{rentPercent},</if>         
+               modify_dt  = CURRENT_TIMESTAMP
+         WHERE booth_id = #{boothId} AND rent_year = #{rentYear} AND rent_month = #{rentMonth}
+    </update>   
+
+    <delete id="deleteRentFeeInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteRentFeeInfo */
+        DELETE FROM ptm_rent_fee WHERE booth_id =  #{boothId} AND rent_year =  #{rentYear} AND rent_month =  #{rentMonth}
+    </delete>
+
+</mapper>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- System administrator tiles properties -->
+    <definition name="root/framework" extends="root">
+        <put-attribute name="header" value="/WEB-INF/views/framework/common/header.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/views/framework/common/menu.jsp" />
+        <put-attribute name="main" value="/WEB-INF/views/common/empty.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/framework/common/footer.jsp" />
+    </definition>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- System Admin pagelayout definition -->
+    <definition name="layout/framework/main" extends="root/framework" template="/WEB-INF/views/_layout/frameworkMainPanel.jsp" />
+    <definition name="layout/framework/popup" extends="root/framework" template="/WEB-INF/views/_layout/frameworkMainPopupPanel.jsp" />
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Code Management -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Code management Main -->
+    <definition name="framework/code/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Code Management > Code List" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/code/codeList.jsp" />
+    </definition>
+
+    <!-- Code Regist Form -->
+    <definition name="framework/code/codeRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Code Management > Code Registration" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/code/popup/codeInfoRegistForm.jsp" />
+    </definition>
+
+    <!-- Code Modify Form -->
+    <definition name="framework/code/codeModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Code Management > Code Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/code/popup/codeInfoModifyForm.jsp" />
+    </definition>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Role Management -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <definition name="framework/role/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Role Management > Role List" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/role/roleList.jsp" />
+    </definition>
+
+    <!-- Role Regist Form -->
+    <definition name="framework/role/roleRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Role Management > Role Registration" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/role/popup/roleInfoRegistForm.jsp" />
+    </definition>
+
+    <!-- Role Modify Form -->
+    <definition name="framework/role/roleModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Role Management > Role Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/role/popup/roleInfoModifyForm.jsp" />
+    </definition>
+
+    <!-- Role Mapping with services -->
+    <definition name="framework/role/serviceMapping" extends="layout/framework/popup">
+        <put-attribute name="title" value="Role Management > Role List > Service Mapping" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/role/popup/serviceMapping.jsp" />
+    </definition>
+
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Service Management -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Service management Main -->
+    <definition name="framework/service/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Service Management > Service List" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/service/serviceList.jsp" />
+    </definition>
+
+    <!-- Service Regist Form -->
+    <definition name="framework/service/serviceRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Service Management > Service Registration" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/service/popup/serviceInfoRegistForm.jsp" />
+    </definition>
+
+    <!-- Service Modify Form -->
+    <definition name="framework/service/serviceModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Service Management > Service Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/service/popup/serviceInfoModifyForm.jsp" />
+    </definition>
+
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- User Management -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- User management Main -->
+    <definition name="framework/user/main" extends="layout/framework/main">
+        <put-attribute name="title" value="User Management > User List" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/user/userList.jsp" />
+    </definition>
+    
+    <!-- User List for common(public) -->
+    <definition name="framework/user/allUserList" extends="layout/framework/main">
+        <put-attribute name="title" value="User Information > User List" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/user/common/allUserList.jsp" />
+    </definition>
+
+    <!-- User Regist Form -->
+    <definition name="framework/user/userRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="User Management > User Registration" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/user/popup/userInfoRegistForm.jsp" />
+    </definition>
+
+    <!-- User Modify Form -->
+    <definition name="framework/user/userModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="User Management > User Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/user/popup/userInfoModifyForm.jsp" />
+    </definition>
+
+    <!-- User Detail Information -->
+    <definition name="framework/user/userDetailInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="User Management > User Detail Information" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/user/popup/userInfoDetailInfo.jsp" />
+    </definition>
+
+    <!-- User Role Mapping -->
+    <definition name="framework/user/roleMapping" extends="layout/framework/popup">
+        <put-attribute name="title" value="User Management > User Role Mapping" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/user/popup/roleMapping.jsp" />
+    </definition>
+    
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- System Properties -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <definition name="framework/sysproperty/main" extends="layout/framework/main">
+        <put-attribute name="title" value="System Management > System Properties" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/system/viewProperties.jsp" />
+    </definition>
+    <!-- Administrator modify -->
+    <definition name="framework/sysproperty/administratorModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="System Management > System Properties > Administrator Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/system/popup/administratorModifyForm.jsp" />
+    </definition>
+    <!-- Exception URL check modify -->
+    <definition name="framework/sysproperty/accessCheckExceptUrlModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="System Management > System Properties > Access Check Exception URLs Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/system/popup/accessCheckExceptUrlModifyForm.jsp" />
+    </definition>
+    <!-- Basic information modify -->
+    <definition name="framework/sysproperty/basicInfoModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="System Management > System Properties > Basic Information Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/system/popup/basicInfoModifyForm.jsp" />
+    </definition>
+    <!-- Basic information modify > Upload root path -->
+    <definition name="framework/sysproperty/dataUploadRootPathModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="System Management > System Properties > Data Upload Rootpath Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/system/popup/dataUploadRootPathModifyForm.jsp" />
+    </definition>
+
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Private Info Management -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Private Detail Information Main -->
+    <definition name="framework/privateInfo/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Private Information" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/privateInfo/popup/privateInfoDetailInfo.jsp" />
+    </definition>    
+    <!-- Private Detail Information -->
+    <definition name="framework/privateInfo/popup/privateDetailInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Private Information > Private Detail Information" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/privateInfo/popup/privateInfoDetailInfo.jsp" />
+    </definition>
+    <!-- Private information Modify Form -->    
+    <definition name="framework/privateInfo/privateInfoModifyForm" extends="layout/framework/main">
+        <put-attribute name="title" value="Private Information > Private Information Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/privateInfo/popup/privateInfoModifyForm.jsp" />
+    </definition>    
+    <definition name="framework/privateInfo/popup/privateInfoModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Private Information > Private Information Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/privateInfo/popup/privateInfoModifyForm.jsp" />
+    </definition>    
+    
+    
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Access Restrict -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->    
+    <definition name="framework/access_restrict" extends="layout/common/plain">
+        <put-attribute name="title" value="Framework > Welcome" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/accessRestrict.jsp" />
+    </definition>    
+    <definition name="framework/license_restrict" extends="layout/common/plain">
+        <put-attribute name="title" value="Framework > Welcome" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/licenseRestrict.jsp" />
+    </definition>    
+
+</tiles-definitions>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlCodeDao">
+
+    <select id="codeInfo" parameterType="java.util.Map" resultType="codeDto">
+    /* QUERY ID : codeInfo */
+        SELECT SYSTEM_CD systemCd,
+                category_cd categoryCd,
+                code_value codeValue,
+                code_name codeName,
+                descript descript,
+                use_yn useYn,
+                code_lvl codeLvl,
+                create_dt createDt
+          FROM FRWK_CMM_CODE
+         WHERE SYSTEM_CD =  #{systemCd} AND CATEGORY_CD =  #{categoryCd} AND CODE_VALUE =  #{codeValue}
+    </select>
+    
+    <select id="codeList" parameterType="java.util.Map" resultType="codeDto">
+     /* QUERY ID : codeList */
+            SELECT system_cd systemCd,
+                category_cd categoryCd,
+                code_value codeValue,
+                code_name codeName,
+                descript descript,
+                use_yn useYn,
+                code_lvl codeLvl,
+                create_dt createDt
+          FROM frwk_cmm_code
+         WHERE  1 = 1
+         <if test="systemCd != null"> AND system_cd = #{systemCd} </if>
+         <if test="categoryCd != null"> AND category_cd = #{categoryCd} </if>
+         <if test="codeName != null">  AND code_name like #{codeName} </if>
+    </select>
+    
+    <select id="systemCodeList" resultType="codeDto">
+     /* QUERY ID : systemCodeList */
+            SELECT DISTINCT(SYSTEM_CD) systemCd FROM frwk_cmm_code
+    </select>
+    
+    <select id="getCategoryCodeList" parameterType="java.lang.String" resultType="codeDto">
+     /* QUERY ID : getCategoryCodeList */
+            SELECT DISTINCT category_cd categoryCd
+              FROM frwk_cmm_code
+             WHERE system_cd = #{systemCd}
+    </select>
+    
+    <select id="insertCodeInfo" parameterType="java.util.Map" resultType="java.lang.Integer">
+     /* QUERY ID : insertCodeInfo */
+        INSERT INTO frwk_cmm_code(system_cd,
+                                  category_cd,
+                                  code_value,
+                                  code_name,
+                                  descript,
+                                  use_yn,
+                                  code_lvl)
+        VALUES (upper(#{systemCd}),
+                upper(#{categoryCd}),
+                #{codeValue},
+                #{codeName},
+                #{descript},
+                upper(#{useYn}),
+                #{codeLvl})   
+    </select>
+    
+    <update id="modifyCodeInfo" parameterType="java.util.Map">
+     /* QUERY ID : modifyCodeInfo */
+        UPDATE frwk_cmm_code SET
+                code_name = #{codeName},
+            descript = #{descript},
+              use_yn = upper(#{useYn}),
+            code_lvl = #{codeLvl}
+        WHERE system_cd = #{systemCd} AND category_cd = #{categoryCd} AND code_value = #{codeValue}    
+    </update>
+    
+    <delete id="deleteCodeInfo" parameterType="java.util.Map">
+     /* QUERY ID : deleteCodeInfo */
+        DELETE FROM frwk_cmm_code
+         WHERE SYSTEM_CD =  #{systemCd} AND CATEGORY_CD =  #{categoryCd} AND CODE_VALUE =  #{codeValue}
+    </delete>
+    
+    <delete id="deleteCodeInfos" parameterType="java.util.List">
+     /* QUERY ID : deleteCodeInfos */
+        DELETE FROM frwk_cmm_code
+         WHERE 1 = 1 AND (
+         <foreach collection="list" index="index" item="item">       
+            <if test="index != 0"> OR </if> 
+             (system_cd = #{item.systemCd} AND category_cd = #{item.categoryCd} AND code_value = #{item.codeValue})
+         </foreach>
+         )
+    </delete>
+    
+</mapper>

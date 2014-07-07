@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+@import url('/photome/resources/css/common/default.css');
+@import url('/photome/resources/css/common/button.css');
+@import url('/photome/resources/css/common/search_panel.css');
+@import url('/photome/resources/css/common/grid_table.css');
+
+
+@import url('/photome/resources/3rd-prod/media/css/demo_page.css');
+@import url('/photome/resources/3rd-prod/media/css/jquery.dataTables.css');

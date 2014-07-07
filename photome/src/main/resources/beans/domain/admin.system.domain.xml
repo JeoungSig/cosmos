@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+               http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <bean id="attachFileDao" class="com.cosmos.common.dao.mysql.MySqlAttachFileDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="commonDao" class="com.cosmos.framework.common.dao.mysql.MySqlCommonDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="codeDao" class="com.cosmos.framework.code.dao.mysql.MySqlCodeDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="roleDao" class="com.cosmos.framework.role.dao.mysql.MySqlRoleDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="serviceDao" class="com.cosmos.framework.service.dao.mysql.MySqlServiceDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="userDao" class="com.cosmos.framework.user.dao.mysql.MySqlUserDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="sysProptyDao" class="com.cosmos.framework.system.dao.mysql.MySqlSysProptyDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="attachFile" class="com.cosmos.common.service.AttachFileService" />
+    <bean id="common" class="com.cosmos.framework.common.service.CommonService" />
+    <bean id="auth" class="com.cosmos.framework.auth.service.AuthService" />
+    <bean id="code" class="com.cosmos.framework.code.service.CodeService" />
+    <bean id="user" class="com.cosmos.framework.user.service.UserService" />
+    <bean id="role" class="com.cosmos.framework.role.service.RoleService" />
+
+
+</beans>

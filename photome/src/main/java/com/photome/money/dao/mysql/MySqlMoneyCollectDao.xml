@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlMoneyCollectDao">
+
+    <select id="getNextCollectId" parameterType="java.util.Map" resultType="java.lang.String">
+    /* QUERY ID : getNextCollectId */
+        SELECT collect_id nextCollectId
+          FROM ptm_money_collect
+         WHERE collect_id = #{preCollectId}
+    </select>
+    
+    <select id="getMoneyCollectList" parameterType="java.util.Map" resultType="moneyCollectDto">
+    /* QUERY ID : getMoneyCollectList */
+         SELECT a.group_id groupId,
+                   b.group_name groupName,
+                   a.booth_id boothId,
+                   c.booth_name boothName,
+                   a.collect_id collectId,
+                   a.pre_collect_id preCollectId,
+                   a.collect_quarter collectQuarter,
+                   a.collect_year collectYear,
+                   a.collect_month collectMonth,
+                   date_format(str_to_date(a.collect_date, '%d/%m/%Y'),'%Y-%m-%d') collectDate,
+                   a.collect_day collectDay,
+                   a.collect_real_income collectRealIncome,
+                   a.collect_amt_diff collectAmtDiff,
+                   FORMAT(a.cash_mtr,0) cashMtr,
+                   FORMAT(a.coin_mtr_bfr,0) coinMtrBfr,
+                   FORMAT(a.coin_mtr_now,0) coinMtrNow,
+                   FORMAT(a.coin_mtr_income,0) coinMtrIncome,
+                   FORMAT(a.film_mtr_bfr,0) filmMtrBfr,
+                   FORMAT(a.film_mtr_now,0) filmMtrNow,
+                   FORMAT(a.film_mtr_consume,0) filmMtrConsume,
+                   a.bank_amount bankAmount,
+                   a.rent_fee_type rentFeeType,
+                   a.rent_amount rentAmount,
+                   a.rent_fee_is_paid rentFeeIsPaid,
+                   a.pay_onsite payOnsite,
+                   a.onsite_is_paid onsiteIsPaid,
+                   a.onsite_pay_amount onsitePayAmount,
+                   a.collect_status collectStatus,
+                   h.code_name collectStatusName,
+                   a.collect_comment collectComment,
+                   a.create_dt createDt,
+                   a.modify_dt modifyDt,
+                   a.modifier modifier,
+                   e.first_name modifierName,
+                   a.collect_status_checker collectStatusChecker,
+                   f.first_name collectStatusCheckerName,
+                   a.bank_account bankAccount,
+                   a.collect_collector collectCollector,
+                   g.first_name collectCollectorName,
+                   a.creator creator,
+                   d.first_name creatorName,
+                   date_format(str_to_date(a.bank_dt, '%d/%m/%Y'),'%Y-%m-%d') bankDt,
+                   a.collect_status_check_dt collectStatusCheckDt,
+                   a.deposit_id depositId
+              FROM ptm_money_collect a
+                 LEFT OUTER JOIN ptm_booth_group b ON b.group_id = a.group_id
+                 LEFT OUTER JOIN ptm_booth_info c ON c.booth_id = a.booth_id
+                 LEFT OUTER JOIN frwk_cmm_userinfo d ON d.user_id = a.creator
+                 LEFT OUTER JOIN frwk_cmm_userinfo e ON e.user_id = a.modifier
+                 LEFT OUTER JOIN frwk_cmm_userinfo f ON f.user_id = a.collect_status_checker
+                 LEFT OUTER JOIN frwk_cmm_userinfo g ON g.user_id = a.collect_collector
+                 LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'COLLECT_STATUS ') h ON h.code_value = a.collect_status
+             WHERE  b.use_yn = 'Y' AND c.use_yn = 'Y'
+             <if test="groupId != null">  AND a.group_id = #{groupId} </if>                
+             <if test="boothId != null">  AND a.booth_id = #{boothId} </if>                
+             <if test="collectYear != null">  AND a.collect_year = #{collectYear} </if>                
+             <if test="collectMonth != null">  AND a.collect_month = #{collectMonth} </if>                
+             <if test="collectStatus != null">  AND a.collect_status = #{collectStatus} </if>                
+             <if test="collectCollector != null">  AND a.collect_collector = #{collectCollector} </if>
+             <if test="depositId != null"> 
+                <choose>
+                    <when test="depositId == 'null'">AND a.deposit_id IS NULL</when>
+                    <otherwise>AND a.deposit_id = #{depositId}</otherwise>
+                </choose>
+             </if>
+             ORDER BY a.create_dt DESC        
+    </select> 
+    
+    
+    <select id="getMoneyCollectorList" resultType="userDto">    
+    /* QUERY ID : getMoneyCollectorList */
+        SELECT a.collect_collector userId, 
+               b.first_name firstName
+          FROM    ptm_money_collect a
+               LEFT OUTER JOIN frwk_cmm_userinfo b ON a.collect_collector = b.user_id
+          WHERE a.collect_collector IS NOT NULL
+        GROUP BY a.collect_collector
+    </select>
+    
+    <select id="getMoneyCollectInfo" parameterType="java.util.Map" resultType="moneyCollectDto">
+    /* QUERY ID : getMoneyCollectInfo */
+         SELECT a.group_id groupId,
+                   b.group_name groupName,
+                   a.booth_id boothId,
+                   c.booth_name boothName,
+                   a.collect_id collectId,
+                   a.pre_collect_id preCollectId,
+                   a.collect_quarter collectQuarter,
+                   a.collect_year collectYear,
+                   a.collect_month collectMonth,
+                   a.collect_date collectDate,
+                   a.collect_day collectDay,
+                   a.collect_real_income collectRealIncome,
+                   a.collect_amt_diff collectAmtDiff,
+                   a.cash_mtr cashMtr,
+                   a.coin_mtr_bfr coinMtrBfr,
+                   a.coin_mtr_now coinMtrNow,
+                   a.coin_mtr_income coinMtrIncome,
+                   a.film_mtr_bfr filmMtrBfr,
+                   a.film_mtr_now filmMtrNow,
+                   a.film_mtr_consume filmMtrConsume,
+                   a.bank_amount bankAmount,
+                   a.rent_fee_type rentFeeType,
+                   a.rent_amount rentAmount,
+                   a.rent_fee_is_paid rentFeeIsPaid,
+                   a.pay_onsite payOnsite,
+                   a.onsite_is_paid onsiteIsPaid,
+                   a.onsite_pay_amount onsitePayAmount,
+                   a.collect_status collectStatus,
+                   h.code_name collectStatusName,
+                   a.collect_comment collectComment,
+                   a.create_dt createDt,
+                   a.modify_dt modifyDt,
+                   a.modifier modifier,
+                   e.first_name modifierName,
+                   a.collect_status_checker collectStatusChecker,
+                   f.first_name collectStatusCheckerName,
+                   a.bank_account bankAccount,
+                   i.acct_name bankAccountName,
+                   a.collect_collector collectCollector,
+                   g.first_name collectCollectorName,
+                   a.creator creator,
+                   d.first_name creatorName,
+                   a.bank_dt bankDt,
+                   a.collect_status_check_dt collectStatusCheckDt,
+                   a.deposit_id depositId
+              FROM ptm_money_collect a
+                 LEFT OUTER JOIN ptm_booth_group b ON b.group_id = a.group_id
+                 LEFT OUTER JOIN ptm_booth_info c ON c.booth_id = a.booth_id
+                 LEFT OUTER JOIN frwk_cmm_userinfo d ON d.user_id = a.creator
+                 LEFT OUTER JOIN frwk_cmm_userinfo e ON e.user_id = a.modifier
+                 LEFT OUTER JOIN frwk_cmm_userinfo f ON f.user_id = a.collect_status_checker
+                 LEFT OUTER JOIN frwk_cmm_userinfo g ON g.user_id = a.collect_collector
+                 LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'COLLECT_STATUS ') h ON h.code_value = a.collect_status
+                 LEFT OUTER JOIN ptm_bank_acctinfo i ON i.acct_id =  a.bank_account
+         WHERE a.collect_id = #{collectId}              
+    </select> 
+
+    <select id="getMoneyCollectNewId" resultType="java.lang.Integer">
+     /* QUERY ID : getMoneyCollectNewId */
+        SELECT (coalesce(max(collect_id), 0) + 1) FROM ptm_money_collect
+    </select>
+    
+    <select id="getMoneyCollectRecentId" parameterType="java.util.Map" resultType="java.lang.String">
+     /* QUERY ID : getMoneyCollectRecentId */
+        SELECT coalesce(max(collect_id), 0)
+          FROM ptm_money_collect
+         WHERE booth_id = #{boothId} 
+         <if test="collectId != null"> AND collect_id &lt; #{collectId} </if>
+    </select>
+    
+    <insert id="insertMoneyCollectInfo" parameterType="java.util.Map">
+     /* QUERY ID : insertMoneyCollectInfo */
+        INSERT INTO ptm_money_collect(
+            group_id,
+            booth_id,
+            collect_id,
+            pre_collect_id,
+            collect_quarter,
+            collect_year,
+            collect_month,
+            collect_date,
+            collect_day,
+            collect_real_income,
+            collect_real_income_bfr,
+            collect_amt_diff,
+            cash_mtr,
+            coin_mtr_bfr,
+            coin_mtr_now,
+            coin_mtr_income,
+            film_mtr_bfr,
+            film_mtr_now,
+            film_mtr_consume,
+            bank_amount,
+            rent_fee_type,
+            rent_amount,
+            rent_fee_is_paid,
+            pay_onsite,
+            onsite_is_paid,
+            onsite_pay_amount,
+            collect_status,
+            collect_comment,
+            create_dt,
+            modify_dt,
+            modifier,
+            collect_status_checker,
+            bank_account,
+            collect_collector,
+            creator,
+            bank_dt,
+            collect_status_check_dt)
+        VALUES (#{groupId},
+                                #{boothId},
+                                #{collectId},
+                                #{preCollectId},
+                                #{collectQuarter},
+                                #{collectYear},
+                                #{collectMonth},
+                                #{collectDate},
+                                #{collectDay},
+                                #{collectRealIncome},
+                                #{collectRealIncomeBfr},
+                                #{collectAmtDiff},
+                                #{cashMtr},
+                                #{coinMtrBfr},
+                                #{coinMtrNow},
+                                #{coinMtrIncome},
+                                #{filmMtrBfr},
+                                #{filmMtrNow},
+                                #{filmMtrConsume},
+                                #{bankAmount},
+                                #{rentFeeType},
+                                #{rentAmount},
+                                #{rentFeeIsPaid},
+                                #{payOnsite},
+                                #{onsiteIsPaid},
+                                #{onsitePayAmount},
+                                #{collectStatus},
+                                #{collectComment},
+                                CURRENT_TIMESTAMP,
+                                CURRENT_TIMESTAMP,
+                                #{modifier},
+                                #{collectStatusChecker},
+                                #{bankAccount},
+                                #{collectCollector},
+                                #{creator},
+                                #{bankDt},
+                                #{collectStatusCheckDt})
+    </insert>
+
+
+    <delete id="deleteMoneyCollectInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteMoneyCollectInfo */                 
+        DELETE FROM ptm_money_collect WHERE collect_id = #{collectId}   
+    </delete>
+
+
+   <update id="updateMoneyCollectInfo" parameterType="java.util.Map">
+   /* QUERY ID : updateMoneyCollectInfo */
+        UPDATE ptm_money_collect SET 
+                <if test="groupId != null"> group_id = #{groupId}, </if>
+                <if test="preCollectId         != null"> pre_collect_id          = #{preCollectId},         </if>       
+                <if test="boothId              != null"> booth_id                = #{boothId},              </if>       
+                <if test="collectQuarter       != null"> collect_quarter         = #{collectQuarter},       </if>
+                <if test="collectYear          != null"> collect_year            = #{collectYear},          </if>
+                <if test="collectMonth         != null"> collect_month           = #{collectMonth},         </if>
+                <if test="collectDate          != null"> collect_date            = #{collectDate},          </if>
+                <if test="collectDay           != null"> collect_day             = #{collectDay},           </if>
+                <if test="collectRealIncome    != null"> collect_real_income     = #{collectRealIncome},    </if>
+                <if test="collectRealIncomeBfr != null"> collect_real_income_bfr = #{collectRealIncomeBfr}, </if>
+                <if test="collectAmtDiff       != null"> collect_amt_diff        = #{collectAmtDiff},       </if>
+                <if test="cashMtr              != null"> cash_mtr                = #{cashMtr},              </if>
+                <if test="coinMtrBfr           != null"> coin_mtr_bfr            = #{coinMtrBfr},           </if>
+                <if test="coinMtrNow           != null"> coin_mtr_now            = #{coinMtrNow},           </if>
+                <if test="coinMtrIncome        != null"> coin_mtr_income         = #{coinMtrIncome},        </if>
+                <if test="filmMtrBfr           != null"> film_mtr_bfr            = #{filmMtrBfr},           </if>
+                <if test="filmMtrNow           != null"> film_mtr_now            = #{filmMtrNow},           </if>
+                <if test="filmMtrConsume       != null"> film_mtr_consume        = #{filmMtrConsume},       </if>
+                <if test="bankAccount          != null"> bank_account            = #{bankAccount},          </if>
+                <if test="bankDt               != null"> bank_dt                 = #{bankDt},               </if>
+                <if test="bankAmount           != null"> bank_amount             = #{bankAmount},           </if>
+                <if test="rentFeeType          != null"> rent_fee_type           = #{rentFeeType},          </if>
+                <if test="rentAmount           != null"> rent_amount             = #{rentAmount},           </if>
+                <if test="rentFeeIsPaid != null"> rent_fee_is_paid = #{rentFeeIsPaid}, </if>
+                <if test="payOnsite            != null"> pay_onsite              = #{payOnsite},            </if>
+                <if test="onsiteIsPaid         != null"> onsite_is_paid          = #{onsiteIsPaid},         </if>
+                <if test="onsitePayAmount      != null"> onsite_pay_amount       = #{onsitePayAmount},      </if>
+                <if test="collectStatus        != null"> collect_status          = #{collectStatus},        </if>
+                <if test="collectComment       != null"> collect_comment         = #{collectComment},       </if>
+                <if test="modifier             != null"> modifier                = #{modifier},             </if>
+                <if test="collectStatusChecker != null"> collect_status_checker  = #{collectStatusChecker}, </if>
+                <if test="collectCollector     != null"> collect_collector       = #{collectCollector},     </if>
+                <if test="collectStatusCheckDt != null"> collect_status_check_dt = #{collectStatusCheckDt}, </if>        
+                modify_dt   = CURRENT_TIMESTAMP     
+         WHERE collect_id = #{collectId} 
+   </update>
+    
+   <update id="modifyCollectStatus" parameterType="java.util.Map">
+   /* QUERY ID : modifyCollectStatus */
+        UPDATE ptm_money_collect SET 
+                collect_status   = upper(#{collectStatus}),
+                modifier         = #{userId},
+                collect_status_checker = #{userId},
+                modify_dt   = CURRENT_TIMESTAMP   
+         WHERE collect_id = #{collectId} 
+    </update>
+   <update id="modifyCollectStatusByDepositId" parameterType="java.util.Map">
+   /* QUERY ID : modifyCollectStatus */
+        UPDATE ptm_money_collect SET
+                collect_status = upper(#{collectStatus}),
+                modify_dt   = CURRENT_TIMESTAMP   
+         WHERE deposit_id = #{depositId} 
+    </update>
+    
+   <update id="modifyBankWork" parameterType="java.util.Map">
+   /* QUERY ID : modifyBankWork */
+        UPDATE ptm_money_collect SET
+                <if test="bankDt != null"> bank_dt = #{bankDt}, </if> 
+                <if test="bankAmount != null"> bank_amount = #{bankAmount}, </if> 
+                <if test="userId != null"> modifier = #{userId}, </if> 
+                <if test="collectStatus  != null"> collect_status = #{collectStatus}, </if>
+                <if test="depositId  != null"> deposit_id = #{depositId}, </if>
+                modify_dt   = CURRENT_TIMESTAMP   
+         WHERE collect_id = #{collectId} 
+    </update>
+    
+   <update id="deleteBankingInfoByDepositId" parameterType="java.util.Map">
+   /* QUERY ID : "deleteBankingInfoByDepositId" */
+        UPDATE ptm_money_collect SET bank_dt = null, bank_amount = null, collect_status = 'COLLECTING',
+                <if test="userId != null"> modifier = #{userId}, </if> 
+                modify_dt   = CURRENT_TIMESTAMP   
+         WHERE deposit_id = #{depositId}  
+    </update>
+          
+                        
+</mapper>

@@ -1,0 +1,190 @@
+@CHARSET "UTF-8";
+
+/*** Common Button Set */
+BUTTON {
+	border: none;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	cursor: hand;
+	height: 22px;
+	text-align: left;
+	margin-left: 3px;
+	padding-left: 21px;
+	padding-top: 2px;
+	color: #696969;
+}
+/* circle bullet (기본버튼) */
+BUTTON.word2 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word2.gif' ); width: 55px; }
+BUTTON.word3 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word3.gif' ); width: 66px; }
+BUTTON.word4 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word4.gif' ); width: 80px; }
+BUTTON.word5 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word5.gif' ); width: 92px; }
+BUTTON.word6 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word6.gif' ); width: 103px; }
+BUTTON.word7 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word7.gif' ); width: 113px; }
+BUTTON.word8 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word8.gif' ); width: 125px; }
+BUTTON.word9 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word9.gif' ); width: 137px; }
+BUTTON.word10 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_word10.gif' ); width: 149px; }
+
+/* left arrow bullet (ex. 이전) */
+BUTTON.left2 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left2.gif' ); width: 55px; }
+BUTTON.left3 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left3.gif' ); width: 66px; }
+BUTTON.left4 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left4.gif' ); width: 80px; }
+BUTTON.left5 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left5.gif' ); width: 92px; }
+BUTTON.left6 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left6.gif' ); width: 103px; }
+BUTTON.left7 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left7.gif' ); width: 113px; }
+BUTTON.left8 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left8.gif' ); width: 125px; }
+BUTTON.left9 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left9.gif' ); width: 137px; }
+BUTTON.left10 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_left10.gif' ); width: 149px; }
+
+/* right arrow bullet (ex. 다음) */
+BUTTON.right2 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right2.gif' ); width: 55px; }
+BUTTON.right3 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right3.gif' ); width: 66px; }
+BUTTON.right4 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right4.gif' ); width: 80px; }
+BUTTON.right5 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right5.gif' ); width: 92px; }
+BUTTON.right6 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right6.gif' ); width: 103px; }
+BUTTON.right7 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right7.gif' ); width: 113px; }
+BUTTON.right8 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right8.gif' ); width: 125px; }
+BUTTON.right9 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right9.gif' ); width: 137px; }
+BUTTON.right10 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_right10.gif' ); width: 149px; }
+
+/* 닫기 */
+BUTTON.close { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_close.gif' ); width: 55px; }
+/* 삭제, 취소 */
+BUTTON.delete { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_delete.gif' ); width: 55px; }
+/* 엑셀가져오기 */
+BUTTON.excel_export { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_excel_export.gif' ); width: 103px; }
+/* 엑셀내보내기 */
+BUTTON.excel_import { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_excel_import.gif' ); width: 103px; }
+/* 등록, 추가 */
+BUTTON.insert { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_insert.gif' ); width: 55px; }
+/* 쓰기 */
+BUTTON.write { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_write.gif' ); width: 55px; }
+/* 수정 */
+BUTTON.update { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_update.gif' ); width: 55px; }
+/* 저장 */
+BUTTON.save { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_save.gif' ); width: 55px; }
+/* 검색 */
+BUTTON.search { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_search.gif' ); width: 55px; }
+/* 상세검색 */
+BUTTON.search4 { background-image: url( '/photome/resources/skin/skin2/images/common/button/default_search4.gif' ); width: 80px; }
+
+/*** 검색 panel */
+#search BUTTON {
+	background-position: center center;
+}
+#search BUTTON.search { 
+	background-image: url('/photome/resources/skin/skin2/images/common/button/image_search.gif'); 
+	width: 41px; 
+	height: 40px; 
+}
+#search BUTTON.search2 { 
+	background-image: url('/photome/resources/skin/skin2/images/common/button/image_search2.gif'); 
+	width: 56px; 
+	height: 49px; 
+}
+#search BUTTON.search3 { 
+	background-image: url('/photome/resources/skin/skin2/images/common/button/image_search3.gif'); 
+	width: 56px; 
+	height: 70px; 
+}
+
+/*** Grid/Detail Table */
+DIV.grid_panel TABLE.grid_table_bbs BUTTON,
+DIV.grid_panel TABLE.grid_table BUTTON,
+DIV.detail_panel TABLE.detail_table BUTTON {
+	height: 18px;
+	letter-spacing: -1px;
+	padding-top: 3px;
+	padding-left: 0;
+	text-align: center;
+	color: #545454;
+	font-size: 11px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word2,
+DIV.grid_panel TABLE.grid_table BUTTON.word2,
+DIV.detail_panel TABLE.detail_table BUTTON.word2 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word2.gif'); width: 54px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word3,
+DIV.grid_panel TABLE.grid_table BUTTON.word3,
+DIV.detail_panel TABLE.detail_table BUTTON.word3 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word3.gif'); width: 54px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word4,
+DIV.grid_panel TABLE.grid_table BUTTON.word4,
+DIV.detail_panel TABLE.detail_table BUTTON.word4 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word4.gif'); width: 54px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word5,
+DIV.grid_panel TABLE.grid_table BUTTON.word5,
+DIV.detail_panel TABLE.detail_table BUTTON.word5 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word5.gif'); width: 64px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word6,
+DIV.grid_panel TABLE.grid_table BUTTON.word6,
+DIV.detail_panel TABLE.detail_table BUTTON.word6 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word6.gif'); width: 75px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word7,
+DIV.grid_panel TABLE.grid_table BUTTON.word7,
+DIV.detail_panel TABLE.detail_table BUTTON.word7 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word7.gif'); width: 86px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word8,
+DIV.grid_panel TABLE.grid_table BUTTON.word8,
+DIV.detail_panel TABLE.detail_table BUTTON.word8 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word8.gif'); width: 97px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word9,
+DIV.grid_panel TABLE.grid_table BUTTON.word9,
+DIV.detail_panel TABLE.detail_table BUTTON.word9 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word9.gif'); width: 108px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word10,
+DIV.grid_panel TABLE.grid_table BUTTON.word10,
+DIV.detail_panel TABLE.detail_table BUTTON.word10 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word10.gif'); width: 119px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word11,
+DIV.grid_panel TABLE.grid_table BUTTON.word11,
+DIV.detail_panel TABLE.detail_table BUTTON.word11 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word11.gif'); width: 130px;
+}
+DIV.grid_panel TABLE.grid_table_bbs BUTTON.word12,
+DIV.grid_panel TABLE.grid_table BUTTON.word12,
+DIV.detail_panel TABLE.detail_table BUTTON.word12 {
+	background-image: url('/photome/resources/skin/skin2/images/common/button/small_word12.gif'); width: 141px;
+}
+
+
+/******************************************************************************************/
+/* Component Button */
+/******************************************************************************************/
+
+
+/******************************************************************************************/
+/* Popup */
+/******************************************************************************************/
+#skin_popup .main_control BUTTON {
+	height: 23px;
+	text-align: center;
+	padding: 0;
+	padding-top: 1px;
+}
+#skin_popup .main_control BUTTON P {
+	font-size: 11px;
+	color: #FFFFFF;
+	height: 1em;
+	font-family: Dotum;
+	filter: FILTER: Shadow(Color=#000000, Direction=135, Strength=1);
+}
+#skin_popup .main_control BUTTON.word2 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word2.gif'); width: 45px; }
+#skin_popup .main_control BUTTON.word3 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word3.gif'); width: 55px; }
+#skin_popup .main_control BUTTON.word4 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word4.gif'); width: 69px; }
+#skin_popup .main_control BUTTON.word5 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word5.gif'); width: 78px; }
+#skin_popup .main_control BUTTON.word6 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word6.gif'); width: 92px; }
+#skin_popup .main_control BUTTON.word7 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word7.gif'); width: 102px; }
+#skin_popup .main_control BUTTON.word8 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word8.gif'); width: 116px; }
+#skin_popup .main_control BUTTON.word9 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word9.gif'); width: 126px; }
+#skin_popup .main_control BUTTON.word10 { background-image: url('/photome/resources/skin/skin2/images/common/button/popup_word10.gif'); width: 141px; }
+
+

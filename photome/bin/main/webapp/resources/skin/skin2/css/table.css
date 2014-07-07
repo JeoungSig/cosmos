@@ -1,0 +1,201 @@
+﻿ 
+@CHARSET "UTF-8";
+
+DIV.grid_panel A:link, 
+DIV.detail_panel A:link {
+	color: #525252; text-decoration: none;
+}
+DIV.grid_panel A:active, 
+DIV.detail_panel A:active {
+	color: #525252; text-decoration: none;
+}
+DIV.grid_panel A:visited, 
+DIV.detail_panel A:visited {
+	color: #525252; text-decoration: none;
+}
+DIV.grid_panel A:hover, 
+DIV.detail_panel A:hover {
+	color: #0A647D; text-decoration: underline;
+}
+
+.paging A:link    { color: #888888; text-decoration: none; }
+.paging A:active  { color: #888888; text-decoration: none; }
+.paging A:visited { color: #888888; text-decoration: none; }
+.paging A:hover   { color: #3D3D3D; text-decoration: underline overline; }
+
+/*********************************************/
+/* Grid Table Component */
+/*********************************************/
+#wrapper_skin1 .paging {
+	text-align: center;
+	margin-top: 11px;
+	margin-bottom: 15px;
+	font-size: 11px;
+	font-family: Arial;
+	color: #858585;
+}
+#wrapper_skin1 .paging A {
+	font-size: 9px;
+	font-family: Arial;
+}
+
+#wrapper_skin1 .paging TD {
+	font-size: 11px;
+	font-family: Arial;
+	color: #858585;
+}
+#wrapper_skin1 .paging TD A {
+	font-size: 9px;
+	font-family: Arial;
+}
+
+/***** Grid Table (for General / for Board) *******/
+DIV.grid_panel {
+	border-top: 2px solid #909090;
+	margin-bottom: 20px;
+}
+DIV.grid_panel TABLE.grid_table .gridtableBG01 {
+	background-color: #F9F9F9;
+}
+
+DIV.grid_panel TABLE.grid_table .gridtableBG02 {
+	background-color: #F7FBFD;
+}
+
+/***** Grid Table for General *******/
+DIV.grid_panel TABLE.grid_table THEAD,
+DIV.grid_panel TABLE.grid_table_bbs THEAD,
+DIV.grid_panel TABLE.grid_table2 THEAD,
+DIV.grid_panel TABLE.grid_table2_bbs THEAD {
+	background-image: url( '../images/common/table/grid_table_thead_bg.gif' );
+	background-position: left bottom;
+	background-repeat: repeat-x;
+	padding-bottom: 5px;
+}
+
+DIV.grid_panel TABLE.grid_table THEAD TH,
+DIV.grid_panel TABLE.grid_table_bbs THEAD TH,
+DIV.grid_panel TABLE.grid_table2 THEAD TH,
+DIV.grid_panel TABLE.grid_table2_bbs THEAD TH {
+	height: 28px;
+	background-color: #FFFFFF;
+	background-image: url('../images/common/table/grid_table_thead_th_bg.gif');
+	background-position: center bottom;
+	background-repeat: repeat-x;
+	font-size: 12px;
+	margin-bottom: 2px;
+	text-align: center;
+	font-weight: bold;
+	border-left:1px solid #E2E4E4;
+}
+DIV.grid_panel TABLE.grid_table2 THEAD TH.row2,
+DIV.grid_panel TABLE.grid_table2_bbs THEAD TH.row2 {
+	height: 28px;
+	background-color: #FFFFFF;
+	background-image: url('../images/common/table/grid_table2_thead_th_bg.gif');
+	background-position: center bottom;
+	background-repeat: repeat-x;
+	font-size: 12px;
+	margin-bottom: 2px;
+	text-align: center;
+	font-weight: bold;
+	border-left:1px solid #E2E4E4;
+}
+
+DIV.grid_panel TABLE.grid_table THEAD TH.last,
+DIV.grid_panel TABLE.grid_table_bbs THEAD TH.last,
+DIV.grid_panel TABLE.grid_table2 THEAD TH.last,
+DIV.grid_panel TABLE.grid_table2_bbs THEAD TH.last {
+	background-image: url( '../images/common/table/grid_table_thead_th_bg_last.gif' );
+	background-position: right bottom;
+	background-repeat: no-repeat;
+}
+
+DIV.grid_panel TABLE.grid_table TBODY TD,
+DIV.grid_panel TABLE.grid_table_bbs TBODY TD,
+DIV.grid_panel TABLE.grid_table2 TBODY TD,
+DIV.grid_panel TABLE.grid_table2_bbs TBODY TD {
+	height: 26px;
+	color: #7F7F7F;
+	font-size: 12px;
+	/*LETTER-SPACING: -1px;*/
+	background-image: url( '../images/common/table/grid_table_tbody_td_bg.gif' );
+	background-position: right bottom;
+	background-repeat: no-repeat;
+	border-bottom: 1px solid #E2E4E4;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+DIV.grid_panel TABLE.grid_table TBODY TD.last,
+DIV.grid_panel TABLE.grid_table_bbs TBODY TD.last,
+DIV.grid_panel TABLE.grid_table2 TBODY TD.last,
+DIV.grid_panel TABLE.grid_table2_bbs TBODY TD.last {
+	background-image: none;
+}
+/*********************************************/
+/* Detail / Form Table Component */
+/*********************************************/
+DIV.detail_panel {
+	clear: both;
+	border-top: 2px solid #CCCCCC;
+	margin-bottom: 15px;
+	width: 98%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+/* designed SelectBox에는 style이 먹히지 않도록! */
+DIV.detail_panel TABLE.detail_table TABLE.SELECTBOX_DIV,
+DIV.detail_panel TABLE.detail_table TABLE.SELECTBOX_DIV TBODY TR,
+DIV.detail_panel TABLE.detail_table TABLE.SELECTBOX_DIV TBODY TD {
+	height: 0;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+DIV.detail_panel TABLE {
+	width: 100%;
+}
+DIV.detail_panel TABLE.detail_table TD {
+	word-break: break-all;
+	font-size: 12px;
+	height: 34px;
+	border-bottom: 1px solid #E7E3E7;
+}
+DIV.detail_panel TABLE.detail_table THEAD TD TABLE TD {
+ border-top: none;
+}
+DIV.detail_panel TABLE.detail_table TD.label {
+	text-align: right;
+	font-weight: bold;
+	padding-left: 2px;
+	padding-right: 2px;
+	background-color: #EFEFEF;
+	color: #191919;
+}
+DIV.detail_panel TABLE.detail_table TD.value {
+	padding-left: 4px;
+	color: #525252;
+}
+DIV.detail_panel TABLE.detail_table TBODY .content {
+	padding: 10px;
+	text-align: justify;
+	line-height:20pt;
+	color: #525252;
+}
+DIV.detail_panel TABLE.detail_table THEAD TR {
+	height: 25px;
+}
+DIV.detail_panel TABLE.detail_table THEAD TR.title TD.value {
+	border-left: 1px solid #FFFFFF;
+	font-weight: bold;
+}
+
+/*** Form Controls in Grid/Detail Table */
+DIV.grid_panel TABLE.grid_table INPUT,
+DIV.grid_panel TABLE.grid_table_bbs INPUT,
+DIV.detail_panel TABLE.detail_table INPUT {
+	width: 97%;
+}
+
+

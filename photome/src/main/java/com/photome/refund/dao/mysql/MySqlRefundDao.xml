@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlRefundDao">
+
+    <select id="getRefundList" parameterType="java.util.Map" resultType="refundDto">
+     /* QUERY ID : getRefundList */
+        SELECT a.refund_id           refundId,       
+               a.booth_id            boothId,        
+               c.booth_name          boothName,        
+               d.group_id            groupId,        
+               d.group_name          groupName,        
+               DATE_FORMAT(STR_TO_DATE(a.refund_dt, '%d/%m/%Y'), '%Y/%m/%d')           refundDt,       
+               a.req_firstname       reqFirstname,   
+               a.req_lastname        reqLastname,    
+               a.req_postcd          reqPostcd,      
+               a.req_state           reqState,       
+               a.req_suburb          reqSuburb,      
+               a.req_street_no       reqStreetNo,   
+               a.req_contact_info    reqContactInfo,
+               a.refund_reason       refundReason,   
+               a.refund_amount       refundAmount,   
+               a.refund_status       refundStatus,   
+               b.code_name           refundStatusName,   
+               a.create_dt           createDt,       
+               a.update_dt           updateDt,       
+               a.creator             creator,         
+               DATE_FORMAT(STR_TO_DATE(a.req_dt, '%d/%m/%Y'), '%Y/%m/%d')    reqDt        
+          FROM ptm_refund a
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'REFUND_STATUS') b ON b.code_value = a.refund_status
+               LEFT OUTER JOIN (SELECT booth_id, booth_name, group_id, use_yn FROM ptm_booth_info ) c ON c.booth_id = a.booth_id
+               LEFT OUTER JOIN (SELECT group_id, group_name, use_yn FROM ptm_booth_group ) d ON d.group_id = c.group_id
+         WHERE c.use_yn = 'Y' AND d.use_yn = 'Y'        
+             <if test="groupId != null">  AND c.group_id = #{groupId} </if>                
+             <if test="boothId != null">  AND c.booth_id = #{boothId} </if>                
+             <if test="reqFirstname != null">  AND a.req_firstname LIKE CONCAT('%','${reqFirstname}', '%')  </if>                
+             <if test="reqPostcd != null">  AND a.req_postcd = #{reqPostcd} </if>                
+             <if test="reqState != null">  AND a.req_state = #{reqState} </if>                
+             <if test="reqSuburb != null">  AND a.req_suburb  LIKE CONCAT('%','${reqSuburb}', '%') </if> 
+             <if test="refundStatus != null">  AND a.refund_status = #{refundStatus} </if> 
+             <if test="fromReqDt != null and toReqDt != null">  AND DATE_FORMAT(STR_TO_DATE(a.req_dt, '%d/%m/%Y'),'%Y-%m-%d') BETWEEN DATE_FORMAT(STR_TO_DATE(#{fromReqDt}, '%d/%m/%Y'),'%Y-%m-%d') AND DATE_FORMAT(STR_TO_DATE(#{toReqDt}, '%d/%m/%Y'),'%Y-%m-%d') </if>
+         ORDER BY STR_TO_DATE(a.req_dt, '%d/%m/%Y') DESC, d.group_name ASC, c.booth_name ASC     
+    </select> 
+    
+    
+    <select id="getRefundInfo" parameterType="java.util.Map" resultType="refundDto">
+     /* QUERY ID : getRefundInfo */
+        SELECT a.refund_id           refundId,       
+               a.booth_id            boothId,        
+               c.booth_name          boothName,        
+               d.group_id            groupId,        
+               d.group_name          groupName,        
+               a.refund_dt           refundDt,       
+               a.req_firstname       reqFirstname,   
+               a.req_lastname        reqLastname,    
+               a.req_postcd          reqPostcd,      
+               a.req_state           reqState,       
+               a.req_suburb          reqSuburb,      
+               a.req_street_no       reqStreetNo,   
+               a.req_contact_info    reqContactInfo,
+               a.refund_reason       refundReason,   
+               a.refund_amount       refundAmount,   
+               a.refund_status       refundStatus,   
+               b.code_name           refundStatusName,   
+               a.create_dt           createDt,       
+               a.update_dt           updateDt,       
+               a.creator             creator,         
+               a.req_dt              reqDt        
+          FROM ptm_refund a
+               LEFT OUTER JOIN (SELECT code_value, code_name FROM frwk_cmm_code WHERE system_cd = 'PHOTOME' AND category_cd = 'REFUND_STATUS') b ON b.code_value = a.refund_status
+               LEFT OUTER JOIN (SELECT booth_id, booth_name, group_id FROM ptm_booth_info ) c ON c.booth_id = a.booth_id
+               LEFT OUTER JOIN (SELECT group_id, group_name FROM ptm_booth_group ) d ON d.group_id = c.group_id
+         WHERE refund_id = #{refundId}        
+    </select> 
+
+    <select id="getNewRefundId" resultType="java.lang.Integer">
+     /* QUERY ID : getNewRefundId */
+        SELECT (coalesce(max(refund_id), 0) + 1) FROM ptm_refund;
+    </select>
+
+    <insert id="registRefundInfo" parameterType="java.util.Map">
+     /* QUERY ID : registRefundInfo */
+        INSERT INTO ptm_refund(refund_id,
+                               booth_id,
+                               refund_dt,
+                               req_firstname,
+                               req_lastname,
+                               req_postcd,
+                               req_state,
+                               req_suburb,
+                               req_street_no,
+                               req_contact_info,
+                               refund_reason,
+                               refund_amount,
+                               refund_status,
+                               creator,
+                               req_dt)
+        VALUES (#{refundId},
+                #{boothId},
+                #{refundDt},
+                #{reqFirstname},
+                #{reqLastname},
+                #{reqPostcd},
+                #{reqState},
+                #{reqSuburb},
+                #{reqStreetNo},
+                #{reqContactInfo},
+                #{refundReason},
+                #{refundAmount},
+                #{refundStatus},
+                #{creator},
+                #{reqDt})  
+    
+    </insert>   
+    
+   <update id="updateRefundInfo" parameterType="java.util.Map">
+   /* QUERY ID : updateRefundInfo */
+        UPDATE ptm_refund SET 
+                <if test="boothId    != null">      booth_id      =    #{boothId},       </if>
+                <if test="refundDt   != null">      refund_dt     =    #{refundDt},      </if>
+                <if test="reqFirstname != null">    req_firstname =    #{reqFirstname},  </if>
+                <if test="reqLastname  != null">    req_lastname  =    #{reqLastname},   </if>
+                <if test="reqPostcd    != null">    req_postcd    =    #{reqPostcd},     </if>
+                <if test="reqState     != null">    req_state     =    #{reqState},      </if>
+                <if test="reqSuburb    != null">    req_suburb    =    #{reqSuburb},     </if>
+                <if test="reqStreetNo  != null">    req_street_no =    #{reqStreetNo},   </if>
+                <if test="reqContactInfo != null">  req_contact_info = #{reqContactInfo}, </if>
+                <if test="refundReason != null">    refund_reason =    #{refundReason},  </if>
+                <if test="refundAmount != null">    refund_amount =    #{refundAmount},  </if>
+                <if test="refundStatus != null">    refund_status =    #{refundStatus},  </if>
+                <if test="updateDt    != null">     update_dt     =    #{updateDt},      </if>
+                <if test="creator     != null">     creator       =    #{creator},       </if>
+                <if test="reqDt       != null">     req_dt        =    #{reqDt},         </if>
+                update_dt   = CURRENT_TIMESTAMP     
+         WHERE refund_id = #{refundId} 
+   </update>    
+                     
+    <delete id="deleteRefundInfo" parameterType="java.util.Map">
+    /* QUERY ID : deleteRefundInfo */                 
+        DELETE FROM ptm_refund WHERE refund_id = #{refundId}   
+    </delete>
+    
+                            
+</mapper>
