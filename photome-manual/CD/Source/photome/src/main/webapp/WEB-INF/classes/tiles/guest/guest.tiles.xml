@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- Guest tiles properties -->
+    <definition name="root/guest" extends="root">
+        <put-attribute name="header" value="/WEB-INF/views/guest/common/header.jsp" />
+        <put-attribute name="main" value="/WEB-INF/views/common/empty.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/framework/common/footer.jsp" />
+    </definition>
+    
+
+    <!-- Main : Front user -->
+    <definition name="panel/guest" extends="root/guest" template="/WEB-INF/views/_layout/guestMainPanel.jsp">
+    </definition>
+
+    <!-- Popup : Front user -->
+    <definition name="layout/guest/popup" extends="root/guest" template="/WEB-INF/views/_layout/guestMainPopupPanel.jsp">
+    </definition>
+
+
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Guest portal -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Login -->
+    <definition name="guest/login" extends="layout/common/plain">
+        <put-attribute name="title" value="Guest > Login" />
+        <put-attribute name="main" value="/WEB-INF/views/guest/login.jsp" />
+    </definition>
+
+    <!-- Notice -->
+    <definition name="guest/notice" extends="layout/common/plain">
+        <put-attribute name="title" value="Guest > Notice" />
+        <!-- <put-attribute name="main" value="/WEB-INF/views/guest/notice.jsp" /> -->
+        <put-attribute name="main" value="/WEB-INF/views/common/empty.jsp" />
+        
+    </definition>
+
+    <!-- Login panel -->
+    <definition name="guest/welcome" extends="panel/guest">
+        <put-attribute name="login" value="guest/login" />
+        <put-attribute name="notice" value="guest/notice" />
+    </definition>
+
+    <!-- Create account -->
+    <definition name="guest/createNewAccount" extends="layout/guest/popup">
+        <put-attribute name="title" value="Create new Account" />
+        <put-attribute name="main" value="/WEB-INF/views/guest/popup/createNewAccountForm.jsp" />
+    </definition>
+
+</tiles-definitions>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Money Deposit : For Technicians -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Money Deposit main -->
+    <definition name="business/money/deposit/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Money Deposit > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/deposit/moneyDepositMain.jsp" />
+    </definition>
+    
+    <definition name="business/money/deposit/bankDeposit" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Deposit > Deposit" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/deposit/popup/moneyDeposit.jsp" />
+    </definition>
+    <definition name="business/money/deposit/bankDepositInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Money Deposit > Deposit" />
+        <put-attribute name="main" value="/WEB-INF/views/business/money/deposit/popup/moneyDepositInfo.jsp" />
+    </definition>
+
+     
+</tiles-definitions>

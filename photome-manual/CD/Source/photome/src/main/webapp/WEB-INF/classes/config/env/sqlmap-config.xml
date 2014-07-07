@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+        <typeAlias type="com.cosmos.common.AttachFileDto" alias="attachFileDto" />
+        <typeAlias type="com.cosmos.framework.common.PostAddrDto" alias="postAddrDto" />
+        <typeAlias type="com.cosmos.framework.code.CodeDto" alias="codeDto" />
+        <typeAlias type="com.cosmos.framework.role.RoleDto" alias="roleDto" />
+        <typeAlias type="com.cosmos.framework.service.ServiceDto" alias="serviceDto" />
+        <typeAlias type="com.cosmos.framework.user.UserDto" alias="userDto" />
+        <typeAlias type="com.cosmos.framework.system.SysProptyDto" alias="sysProptyDto" />
+
+        <typeAlias type="com.photome.dto.BoothDto" alias="boothDto" />
+        <typeAlias type="com.photome.dto.BoothGroupDto" alias="boothGroupDto" />
+        <typeAlias type="com.photome.dto.MaintenanceHistoryDto" alias="maintenanceHistoryDto" />
+        <typeAlias type="com.photome.dto.NoticeBoardDto" alias="noticeBoardDto" />
+        <typeAlias type="com.photome.dto.NoticeReplyDto" alias="noticeReplyDto" />
+        <typeAlias type="com.photome.dto.MaintenanceHistoryDto" alias="maintenanceHistoryDto" />
+        <typeAlias type="com.photome.dto.MaintenanceCommentDto" alias="maintenanceCommentHistoryDto" />
+        <typeAlias type="com.photome.dto.BankAcctInfoDto" alias="bankAcctInfoDto" />
+        <typeAlias type="com.photome.dto.MoneyCollectDto" alias="moneyCollectDto" />
+        <typeAlias type="com.photome.dto.BoothRentFeePayDto" alias="boothRentFeePayDto" />
+        <typeAlias type="com.photome.dto.RefundDto" alias="refundDto" />
+        <typeAlias type="com.photome.dto.BoothRentFeeDto" alias="boothRentFeeDto" />
+        <typeAlias type="com.photome.dto.MoneyCollectRptDto" alias="moneyCollectRptDto" />
+        <typeAlias type="com.photome.dto.MoneyDepositDto" alias="moneyDepositDto" />
+
+    </typeAliases>
+
+</configuration> 

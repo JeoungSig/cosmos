@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+    "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <!-- Framework Frontpage -->
+    <definition name="super_admin/welcome" extends="layout/framework/main">
+        <put-attribute name="title" value="Framework > Welcome" />
+        <put-attribute name="main" value="/WEB-INF/views/framework/welcome.jsp" />
+    </definition>
+
+    <!-- Admin task Frontpage -->
+    <definition name="admin/welcome" extends="layout/framework/main">
+        <put-attribute name="title" value="Admin > Welcome" />
+        <put-attribute name="main" value="/WEB-INF/views/admin/welcome.jsp" />
+    </definition>
+
+    <!-- Business task Frontpage -->
+    <definition name="business/welcome" extends="layout/framework/main">
+        <put-attribute name="title" value="Business > Welcome" />
+        <put-attribute name="main" value="/WEB-INF/views/business/welcome.jsp" />
+    </definition>
+
+</tiles-definitions>

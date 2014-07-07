@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mySqlAuthDao" >
+
+    <select id="userList" parameterType="java.util.Map" resultType="userDto">
+     /* QUERY ID : userList */
+     SELECT     user_id         userId,          
+                passwd          passwd,          
+                pwdfail_cnt     pwdfailCnt,      
+                first_name      firstName,       
+                middle_name     middleName,      
+                last_name       lastName,        
+                addr_street     addrStreet,      
+                addr_suburb     addrSuburb,      
+                addr_state      addrState,       
+                addr_zipcd      addrZipcd,       
+                mobile_phone    mobilePhone,     
+                telephone       telephone,       
+                email           email,           
+                sex             sex,             
+                birth_dt        birthDt,         
+                ext_col1        extCol1,         
+                ext_col2        extCol2,         
+                ext_col3        extCol3,         
+                ext_col4        extCol4,         
+                ext_col5        extCol5,         
+                use_yn          useYn,           
+                create_dt       createDt,        
+                modify_dt       modifyDt,        
+                login_dt        loginDt,         
+                picture_file    pictureFile,     
+                user_type       userType        
+          FROM FRWK_CMM_USERINFO
+         WHERE 1 = 1 
+         <if test="firstName != null">  AND first_name like #{firstName} </if>
+         <if test="useYn != null">  AND use_yn like #{useYn} </if>
+         <if test="userType != null">  AND user_type like #{userType} </if>
+    </select>
+    
+    <select id="getProfilePhoto" parameterType="java.util.Map" resultType="java.lang.String">
+     /* QUERY ID : getProfilePhoto */
+        SELECT concat(b.data_upload_rootpath, '/', upper(a.info_type), '/', a.saved_name) filepath
+          FROM frwk_cmm_attach_file a, frwk_cmm_sysproperties b
+         WHERE     a.file_id = (SELECT picture_file
+                                FROM frwk_cmm_userinfo
+                               WHERE user_id = '${userId}')
+               AND b.sys_id = '0'
+    </select>   
+    
+    <insert id="insertUserInfo" parameterType="java.util.Map">
+     /* QUERY ID : insertUserInfo */
+        INSERT INTO FRWK_CMM_USERINFO( user_id,
+                            passwd,
+                            first_name,
+                            addr_street,
+                            addr_suburb,
+                            addr_state,
+                            addr_zipcd,
+                            mobile_phone,
+                            telephone,
+                            email,
+                            sex,
+                            birth_dt,
+                            use_yn,
+                            modify_dt,
+                            picture_file,
+                            user_type)
+        VALUES (#{userId},
+            #{passwd},
+            #{firstName},
+            #{addrStreet},
+            #{addrSuburb},
+            #{addrState},
+            #{addrZipcd},
+            #{mobilePhone},
+            #{telephone},
+            #{email},
+            #{sex},
+            #{birthDt},
+            upper(#{useYn}),
+            CURRENT_TIMESTAMP,
+            #{pictureFile},
+            #{userType}  )
+    </insert>    
+    
+    <select id="getUserInfo" parameterType="java.util.Map" resultType="userDto">
+     /* QUERY ID : getUserInfo */
+        SELECT user_id         userId,          
+                passwd          passwd,          
+                pwdfail_cnt     pwdfailCnt,      
+                first_name      firstName,       
+                middle_name     middleName,      
+                last_name       lastName,        
+                addr_street     addrStreet,      
+                addr_suburb     addrSuburb,      
+                addr_state      addrState,       
+                addr_zipcd      addrZipcd,       
+                mobile_phone    mobilePhone,     
+                telephone       telephone,       
+                email           email,           
+                sex             sex,             
+                birth_dt        birthDt,         
+                ext_col1        extCol1,         
+                ext_col2        extCol2,         
+                ext_col3        extCol3,         
+                ext_col4        extCol4,         
+                ext_col5        extCol5,         
+                use_yn          useYn,           
+                create_dt       createDt,        
+                modify_dt       modifyDt,        
+                login_dt        loginDt,         
+                picture_file    pictureFile,     
+                user_type       userType
+          FROM FRWK_CMM_USERINFO
+         WHERE user_id =  #{userId}
+    </select>
+    
+    <update id="modifyUserInfo" parameterType="java.util.Map">
+     /* QUERY ID : modifyUserInfo */
+        UPDATE FRWK_CMM_USERINFO SET
+                passwd        = #{passwd},
+                first_name    = #{firstName},
+                middle_name   = #{middleName},
+                last_name     = #{lastName},
+                addr_street   = #{addrStreet},
+                addr_suburb   = #{addrSuburb},
+                addr_state    = #{addrState},
+                addr_zipcd    = #{addrZipcd},
+                mobile_phone  = #{mobilePhone},
+                telephone     = #{telephone},
+                email         = #{email},
+                birth_dt      = #{birthDt},
+                sex           = #{sex},
+                birth_dt      = #{birthDt},
+                ext_col1      = #{extCol1},
+                ext_col2      = #{extCol2},
+                ext_col3      = #{extCol3},
+                ext_col4      = #{extCol4},
+                ext_col5      = #{extCol5},
+                use_yn        = upper(#{useYn}),
+                modify_dt     = CURRENT_TIMESTAMP,
+                picture_file  = #{pictureFile},
+                user_type     = #{userType}
+        WHERE user_id = #{userId}    
+    </update>
+    
+    <update id="modifyUserYn" parameterType="java.lang.String">
+     /* QUERY ID : modifyUserYn */
+        UPDATE FRWK_CMM_USERINFO SET  use_yn = upper(#{useYn}) WHERE user_id = #{userId}    
+    </update>
+        
+    <delete id="deleteUserInfo" parameterType="java.lang.String">
+     /* QUERY ID : deleteUserInfo */
+        DELETE FROM FRWK_CMM_USERINFO WHERE user_id = #{userId}    
+    </delete>    
+        
+</mapper>

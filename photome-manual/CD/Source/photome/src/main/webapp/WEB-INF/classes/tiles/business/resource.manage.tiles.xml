@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Resource Management -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Group Main -->
+    <definition name="business/resmanage/group/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Resource Group Management > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/groupInfoList.jsp" />
+    </definition>
+
+    <!-- Group detail information -->
+    <definition name="business/resmanage/group/groupInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Group Management > Group Detail Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/popup/groupInfo.jsp" />
+    </definition>
+
+    <!-- Group registration form -->
+    <definition name="business/resmanage/group/groupInfoRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Group Management > Group Registration" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/popup/groupInfoRegistForm.jsp" />
+    </definition>
+    
+    <!-- Group modify form -->
+    <definition name="business/resmanage/group/groupInfoUpdateForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Group Management > Modify Group Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/popup/groupInfoUpdateForm.jsp" />
+    </definition>
+
+
+    <!-- Booth Main -->
+    <definition name="business/resmanage/booth/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Resource Photo Booth Management > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/boothInfoList.jsp" />
+    </definition>
+
+    <!-- Booth list -->
+    <definition name="business/resmanage/booth/boothInfoList" extends="layout/framework/main">
+        <put-attribute name="title" value="Resource Photo Booth Management > Booth List" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/boothInfoList.jsp" />
+    </definition>
+    
+    <!-- Booth registration form -->
+    <definition name="business/resmanage/booth/boothInfoRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Photo Booth Management > Booth Registration" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/popup/boothInfoRegistForm.jsp" />
+    </definition>
+    
+    <!-- Booth detail information -->
+    <definition name="business/resmanage/booth/boothInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Photo Booth Management > Booth Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/popup/boothInfo.jsp" />
+    </definition>
+
+    <!-- Booth registration form -->
+    <definition name="business/resmanage/booth/boothInfoUpdateForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Photo Booth Management > Booth Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/popup/boothInfoUpdateForm.jsp" />
+    </definition>
+
+    <!-- Booth registration form -->
+    <definition name="business/resmanage/booth/setPersonForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Photo Booth Management > Booth Registration > Set person in charge" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/popup/setPersonForm.jsp" />
+    </definition>
+    
+    <!-- Bank Account Main -->
+    <definition name="business/resmanage/bankAccount/main" extends="layout/framework/main">
+        <put-attribute name="title" value="Resource Bank Account Management > Main" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/bankAccount/bankAccountInfoList.jsp" />
+    </definition>
+    
+    <!-- Bank Account Detail information -->
+    <definition name="business/resmanage/bankAccount/bankAccountInfo" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Bank Account Management > Account Detail Information" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/bankAccount/bankAccountInfo.jsp" />
+    </definition>
+    
+    <!-- Bank Account regist form -->
+    <definition name="business/resmanage/bankAccount/bankAccountRegistForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Bank Account Management > Account Information Registration" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/bankAccount/bankAccountRegistForm.jsp" />
+    </definition>
+    
+    <!-- Bank Account modify form -->
+    <definition name="business/resmanage/bankAccount/bankAccountModifyForm" extends="layout/framework/popup">
+        <put-attribute name="title" value="Resource Bank Account Management > Account Information Modify" />
+        <put-attribute name="main" value="/WEB-INF/views/business/resmanage/bankAccount/bankAccountModifyForm.jsp" />
+    </definition>
+    
+</tiles-definitions>

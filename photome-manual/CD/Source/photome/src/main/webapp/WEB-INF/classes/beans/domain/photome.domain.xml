@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+               http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <!-- DAO Bean Definition -->
+    <bean id="resManageDao" class="com.photome.resmanage.dao.mysql.MySqlResourceManagerDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="techSupportDao" class="com.photome.techsupport.dao.mysql.MySqlTechSupportDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="moneyCollectDao" class="com.photome.money.dao.mysql.MySqlMoneyCollectDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="refundDao" class="com.photome.refund.dao.mysql.MySqlRefundDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="boothRentFeePayDao" class="com.photome.money.dao.mysql.MySqlBoothRentFeePayDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="boothRentFeeDao" class="com.photome.resmanage.dao.mysql.MySqlBoothRentFeeDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="moneyCollectRptMapDao" class="com.photome.report.dao.mysql.MySqlMoneyCollectRptMapDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="moneyDepositDao" class="com.photome.money.dao.mysql.MySqlMoneyDepositDao">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
+    <!-- Service Bean Definition -->
+    <bean id="resManage" class="com.photome.resmanage.service.ResourceManageService" />
+    <bean id="techSupport" class="com.photome.techsupport.service.TechSupportService" />
+    <bean id="moneyCollect" class="com.photome.money.service.MoneyCollectService" />
+    <bean id="refund" class="com.photome.refund.service.RefundService" />
+    <bean id="boothRentFeePay" class="com.photome.money.service.BoothRentFeePayService" />
+    <bean id="boothRentFee" class="com.photome.resmanage.service.BoothRentFeeService" />
+    <bean id="photoMeReport" class="com.photome.report.service.PhotoMeReportService" />
+    <bean id="moneyDeposit" class="com.photome.money.service.MoneyDepositService" />
+
+
+</beans>
