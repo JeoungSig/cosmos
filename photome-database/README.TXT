@@ -6,7 +6,9 @@ On the shell prompt, by using following command we can generate backup file that
 
 shell> mysqldump -u root -p photome > photome_20131221.sql
 
-To explain above command, login with root account (not OS account)  access to photome database  generate backup file named by photome_20131221.sql.
+To explain above command, login with root account (not OS account) 
+    - Access to photome database 
+    - Generate backup file named by photome_20131221.sql.
 
 After giving this command to shell prompt, mysqldump require password of root user. If you key in right password for root user, it will start to generate backup file.
 
@@ -18,8 +20,8 @@ shell> mysql -u root -p photome < photome_20131221.sql
 
 To explain above command, login with root account (not OS account) 
 
-     access to photome database 
-     restore from backup file named by photome_20131221.sql.
+    - Access to photome database 
+    - Restore from backup file named by photome_20131221.sql.
 
 After giving this command to shell prompt, mysql require password of root user. If you key in right password for root user, it will start to generate backup file.
 
