@@ -1,1 +1,0 @@
-mysql -u photome -p photome
